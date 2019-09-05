@@ -1,0 +1,15 @@
+#  ---------------------------------------------------------------------------
+#  description:  This file holds useful http methods for web development  
+#  ---------------------------------------------------------------------------
+#  Description:  This file holders useful utilities for web development
+#  ---------------------------------------------------------------------------
+
+
+alias editHosts='sudo edit /etc/hosts'                  # editHosts:        Edit /etc/hosts file
+
+# httpheaders:      Grabs headers from web page
+httpheaders () { 
+  /usr/bin/curl -I -L $@ ; 
+}             
+
+export -f httpheaders
