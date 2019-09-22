@@ -11,20 +11,18 @@
 # aliases
 for a in $DOTFILES/aliases/.[^.]*
 do
-  echo "Processing alias bash file $a"
-  [[ -s $a ]] && source $a
+  [[ -f $a ]] && source $a
 done
 
 # custom functions & aliases
 for c in $DOTFILES/custom/.[^.]*
 do
-  echo "Processing custom bash file $c"
-  [[ -s $c ]] && source $c
+  [[ -f $c ]] && source $c
 done
 
 [[ -f "$HOME/.bashrc" ]] && source "$HOME/.bashrc"
 
 ii
 
-test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
+#source "${HOME}/.iterm2_shell_integration.bash"
 

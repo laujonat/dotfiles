@@ -5,7 +5,7 @@ HISTSIZE=1000000
 HISTCONTROL=ignoredups
 HISTFILE=~/.bash_history_actual
 
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+#[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 export PATH="$PATH:/usr/local/bin/"
 export CLICOLOR=1
