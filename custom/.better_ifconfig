@@ -1,6 +1,7 @@
+#!/bin/bash/
 #  ---------------------------------------------------------------------------
 #  Description:  This file holds human readible networking utils.
-#  Motivation: Linux cmds <ifconfig> | ps aux | ipconfig | ipfw are confusing. 
+#  Motivation: Linux cmds <ifconfig> | ps aux | ipconfig | ipfw are confusing.
 #  ---------------------------------------------------------------------------
 
 alias myip4='curl ifconfig.me'                      # myip4:        Public facing IPV4 Addr
@@ -19,25 +20,25 @@ alias showBlocked='sudo ipfw list'                  # showBlocked:  All ipfw rul
 #   -------------------------------------------------------------------
 ii() {
   echo -e "\nYou are logged on ${red}$HOST"
-  echo -e "\nAdditionnal information:$nc] " ; uname -a
-  echo -e "\n${cyn}Users logged on:$nc " ; w -h
-  echo -e "\n${grn}Current date :$nc " ; date
-  echo -e "\n${grn}Machine stats :$nc " ; uptime
-  echo -e "\n${blu}Current network location :$nc " ; scselect
-  echo -e "\n${mag}Public facing IPV4 Address :$nc \c " ; myip4
-  echo -e "\n${mag}Public facing IPV6 Address :$nc \c " ; myip6
-  echo -e "\n${nc}"
+    echo -e "\nAdditionnal information:$nc] " ; uname -a
+    echo -e "\n${cyn}Users logged on:$nc " ; w -h
+    echo -e "\n${grn}Current date :$nc " ; date
+    echo -e "\n${grn}Machine stats :$nc " ; uptime
+    echo -e "\n${blu}Current network location :$nc " ; scselect
+    echo -e "\n${mag}Public facing IPV4 Address :$nc \c " ; myip4
+    echo -e "\n${mag}Public facing IPV6 Address :$nc \c " ; myip6
+    echo -e "\n${nc}"
 }
 
 export -f ii
 
 #   ip:  display IPv4 and IPv6 public addresses
 #   -------------------------------------------------------------------
-ip() { 
+ip() {
   echo -e "\n${mag}Public facing IPV4 Address :$nc \c " ; myip4
-  echo -e "\n${mag}Public facing IPV6 Address :$nc \c " ; myip6 
-  echo -e "\n${nc}"
-} 
+    echo -e "\n${mag}Public facing IPV6 Address :$nc \c " ; myip6
+    echo -e "\n${nc}"
+}
 
 export -f ip
 
