@@ -1,44 +1,49 @@
 #!/bin/bash/
 #  ---------------------------------------------------------------------------
 #  Description:  This file holds human readible networking utils.
-#  Motivation: Linux cmds <ifconfig> | ps aux | ipconfig | ipfw are confusing.
+#  Motivation:   Shortcut cmds <ifconfig> | ps aux | ipconfig | ipfw
 #  ---------------------------------------------------------------------------
 
 alias myip4='curl ifconfig.me'                      # myip4:        Public facing IPV4 Addr
 alias myip6='curl ifconfig.co'                      # myip6:        Public facing IPV6 Addr
 alias netCons='lsof -i'                             # netCons:      Show all open TCP/IP sockets
-alias flushDNS='dscacheutil -flushcache'            # flushDNS:     Flush out the DNS Cache
-alias lsock='sudo /usr/sbin/lsof -i -P'             # lsock:        Display open sockets
-alias lsockU='sudo /usr/sbin/lsof -nP | grep UDP'   # lsockU:       Display only open UDP sockets
-alias lsockT='sudo /usr/sbin/lsof -nP | grep TCP'   # lsockT:       Display only open TCP sockets
-alias ipInfo0='ipconfig getpacket en0'              # ipInfo0:      Get info on connections for en0
-alias ipInfo1='ipconfig getpacket en1'              # ipInfo1:      Get info on connections for en1
-alias openPorts='sudo lsof -i | grep LISTEN'        # openPorts:    All listening connections
-alias showBlocked='sudo ipfw list'                  # showBlocked:  All ipfw rules inc/ blocked IP
+#alias flushDNS='dscacheutil -flushcache'            # flushDNS:     Flush out the DNS Cache
+#alias lsock='sudo /usr/sbin/lsof -i -P'             # lsock:        Display open sockets
+#alias lsockU='sudo /usr/sbin/lsof -nP | grep UDP'   # lsockU:       Display only open UDP sockets
+#alias lsockT='sudo /usr/sbin/lsof -nP | grep TCP'   # lsockT:       Display only open TCP sockets
+#alias ipInfo0='ipconfig getpacket en0'              # ipInfo0:      Get info on connections for en0
+#alias ipInfo1='ipconfig getpacket en1'              # ipInfo1:      Get info on connections for en1
+#alias openPorts='sudo lsof -i | grep LISTEN'        # openPorts:    All listening connections
+#alias showBlocked='sudo ipfw list'                  # showBlocked:  All ipfw rules inc/ blocked IP
 
 #   ii:  display useful host related informaton
 #   -------------------------------------------------------------------
 ii() {
-  echo -e "\nYou are logged on ${red}$HOST"
-    echo -e "\nAdditionnal information:$nc] " ; uname -a
-    echo -e "\n${cyn}Users logged on:$nc " ; w -h
-    echo -e "\n${grn}Current date :$nc " ; date
-    echo -e "\n${grn}Machine stats :$nc " ; uptime
-    echo -e "\n${blu}Current network location :$nc " ; scselect
-    echo -e "\n${mag}Public facing IPV4 Address :$nc \c " ; myip4
-    echo -e "\n${mag}Public facing IPV6 Address :$nc \c " ; myip6
-    echo -e "\n${nc}"
+  echo -e "\n${ylw}Logged on as: ${nc}$USER"
+  echo -e "${ylw}Hostname: ${nc} $HOSTNAME"
+  echo -e "\nSystem Information : $nc " ; sys_info
+  echo -e "\n${cyn}Connected Users: ${nc} " ; w -h
+  echo -e "\n${grn}Current date : $nc " ; date
+  echo -e "\n${grn}Machine stats : $nc " ; uptime
+  echo -e "\n${blu}Current network location : $nc " ; scselect
+  echo -e "\n${mag}Public facing IPV4 Address : $nc \c " ; myip4
+  echo -e "\n${mag}Public facing IPV6 Address : $nc \c " ; myip6
+  echo -e "\n${nc}"
 }
-
-export -f ii
 
 #   ip:  display IPv4 and IPv6 public addresses
 #   -------------------------------------------------------------------
-ip() {
-  echo -e "\n${mag}Public facing IPV4 Address :$nc \c " ; myip4
-    echo -e "\n${mag}Public facing IPV6 Address :$nc \c " ; myip6
-    echo -e "\n${nc}"
+iip() {
+  echo -e "\n${ylw}$(ifconfig | grep inet)"
+  echo -e "\n${ylw}$(ifconfig | grep inet6)"
+  echo -e "\n${nc}"
 }
 
-export -f ip
+sys_info() {
+  os=`uname -s`
+  os_r=`uname -r`
+  os_v=`uname -v`
+  p_arch=`uname -p`
 
+  echo -e "${nc} ${os} ${os_r} ${os_v} ${p_arch}"
+}

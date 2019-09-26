@@ -1,4 +1,4 @@
-#!/bin/bash/
+#!/bin/bash
 
 # List/Search
 alias afind='ack -il'
@@ -9,10 +9,10 @@ alias ll='ls -lh'
 alias ls='ls -G'
 alias lsa='ls -lah'
 alias md='mkdir -p'
-alias please=sudo
-alias po=popd
-alias pu=pushd
-alias rd=rmdir
+alias sudo='sudo '
+alias po='popd'
+alias pu='pushd'
+alias rd='rmdir'
 
 # https://github.com/robbyrussell/oh-my-zsh/blob/master/plugins/git/git.plugin.zsh
 function current_branch() {
@@ -25,7 +25,7 @@ function _git_log_prettily(){
     git log --pretty=$1
   fi
 }
-compdef _git _git_log_prettily=git-log
+#compdef _git _git_log_prettily=git-log
 
 # Warn if the current branch is a WIP
 function work_in_progress() {
@@ -34,11 +34,9 @@ function work_in_progress() {
   fi
 }
 
-#
-# Aliases
-# (sorted alphabetically)
-#
-
+# -------------------------
+# Oh-my-zsh Git
+# -------------------------
 alias g='git'
 
 alias ga='git add'
@@ -103,16 +101,19 @@ alias gfg='git ls-files | grep'
 alias gg='git gui citool'
 alias gga='git gui citool --amend'
 
+function git_current_branch() {
+  git branch | grep \* | cut -d  " " -f2
+}
+
 function ggf() {
   [[ "$#" != 1 ]] && local b="$(git_current_branch)"
   git push --force origin "${b:=$1}"
 }
-compdef _git ggf=git-checkout
+
 function ggfl() {
   [[ "$#" != 1 ]] && local b="$(git_current_branch)"
   git push --force-with-lease origin "${b:=$1}"
 }
-compdef _git ggfl=git-checkout
 
 function ggl() {
   if [[ "$#" != 0 ]] && [[ "$#" != 1 ]]; then
@@ -122,7 +123,6 @@ function ggl() {
     git pull origin "${b:=$1}"
   fi
 }
-compdef _git ggl=git-checkout
 
 function ggp() {
   if [[ "$#" != 0 ]] && [[ "$#" != 1 ]]; then
@@ -132,7 +132,6 @@ function ggp() {
     git push origin "${b:=$1}"
   fi
 }
-compdef _git ggp=git-checkout
 
 function ggpnp() {
   if [[ "$#" == 0 ]]; then
@@ -141,13 +140,11 @@ function ggpnp() {
     ggl "${*}" && ggp "${*}"
   fi
 }
-compdef _git ggpnp=git-checkout
 
 function ggu() {
   [[ "$#" != 1 ]] && local b="$(git_current_branch)"
   git pull --rebase origin "${b:=$1}"
 }
-compdef _git ggu=git-checkout
 
 alias ggpur='ggu'
 alias ggpull='git pull origin "$(git_current_branch)"'
@@ -179,7 +176,6 @@ alias glods="git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgr
 alias glola="git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --all"
 alias glog='git log --oneline --decorate --graph'
 alias gloga='git log --oneline --decorate --graph --all'
-alias glp="_git_log_prettily"
 
 alias gm='git merge'
 alias gmom='git merge origin/master'
