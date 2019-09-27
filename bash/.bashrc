@@ -27,18 +27,23 @@ export LESSOPEN="|/usr/loca/bin/lesspipe.sh %s" LESS_ADVANCED_PREPROCESSOR=1
 
 # NOTE: .bashrc is intended for use in interactive, non-login shells.
 # Custom aliases, functions, and shell configurations sourced here.
-[[ -f "$HOME/.os" ]] && source "$DOTFILES/.os"
-[[ -f "$HOME/.colors" ]] && source "$DOTFILES/bash/.colors"
+export CFG="/home/$USER/cfg"
+[[ -f "$HOME/.os" ]] && source "$HOME/.os"
+[[ -f "$HOME/.colors" ]] && source "$HOME/.colors"
+
 # aliases
-for aa in "$DOTFILES/aliases/".[^.]*
+for aa in "$CFG/aliases/".[^.]*
 do
-  [[ -f $aa ]] && source $aa
+  DIR="$( cd "$( dirname "$HOME/$aa" )" >/dev/null 2>&1 && pwd )"
+  echo "alias dir $DIR"
+  [[ -f "$DIR/$aa" ]] && source "$DIR/$aa"
 done
 
 # custom functions & aliases
-for custom_cfg in "$DOTFILES/custom/".[^.]*
+for custom_cfg in "$CFG/custom/".[^.]*
 do
-  [[ -f $custom_cfg ]] && source $custom_cfg
+  DIR="$( cd "$( dirname "$HOME/$custom_cfg" )" >/dev/null 2>&1 && pwd )"
+  [[ -f "$DIR/$custom_cfg" ]] && source "$DIR/$custom_cfg"
 done
 
 
@@ -48,3 +53,5 @@ export CLICOLOR=1
 export LSCOLORS=ExFxBxDxCxegedabagacad
 export PS1='[${blu}\u${red}@${grn}\h:${nc}\W]🌱 '
 
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

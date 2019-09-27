@@ -1,5 +1,5 @@
 #!/bin/bash
-alias vim="nvim"
+# alias vim="nvim"
 alias als="vim ~/.aliases"
 
 # copy file interactive
