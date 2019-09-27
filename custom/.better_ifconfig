@@ -3,12 +3,6 @@
 #  Description:  This file holds human readible networking utils.
 #  Motivation:   Shortcut cmds <ifconfig> | ps aux | ipconfig | ipfw
 #  ---------------------------------------------------------------------------
-
-alias myip4='curl ifconfig.me'                      # myip4:        Public facing IPV4 Addr
-alias myip6='curl ifconfig.co'                      # myip6:        Public facing IPV6 Addr
-alias netCons='lsof -i'                             # netCons:      Show all open TCP/IP sockets
-#alias flushDNS='dscacheutil -flushcache'            # flushDNS:     Flush out the DNS Cache
-#alias lsock='sudo /usr/sbin/lsof -i -P'             # lsock:        Display open sockets
 #alias lsockU='sudo /usr/sbin/lsof -nP | grep UDP'   # lsockU:       Display only open UDP sockets
 #alias lsockT='sudo /usr/sbin/lsof -nP | grep TCP'   # lsockT:       Display only open TCP sockets
 #alias ipInfo0='ipconfig getpacket en0'              # ipInfo0:      Get info on connections for en0
@@ -20,23 +14,18 @@ alias netCons='lsof -i'                             # netCons:      Show all ope
 #   -------------------------------------------------------------------
 ii() {
   echo -e "\n${ylw}Logged on as: ${nc}$USER"
-  echo -e "${ylw}Hostname: ${nc} $HOSTNAME"
-  echo -e "\nSystem Information : $nc " ; sys_info
-  echo -e "\n${cyn}Connected Users: ${nc} " ; w -h
-  echo -e "\n${grn}Current date : $nc " ; date
-  echo -e "\n${grn}Machine stats : $nc " ; uptime
-  echo -e "\n${blu}Current network location : $nc " ; scselect
-  echo -e "\n${mag}Public facing IPV4 Address : $nc \c " ; myip4
-  echo -e "\n${mag}Public facing IPV6 Address : $nc \c " ; myip6
+  echo -e "${ylw}Hostname: ${nc}$HOSTNAME"
+  echo -e "\n${grn}Current date: ${nc}" ; date
+  echo -e "\n${grn}System information: ${nc}" ; sys_info
+  echo -e "\n${grn}Machine stats: ${nc}" ; uptime
+  echo -e "\n${grn}LAN: ${white} " ; iip
   echo -e "\n${nc}"
 }
 
 #   ip:  display IPv4 and IPv6 public addresses
 #   -------------------------------------------------------------------
 iip() {
-  echo -e "\n${ylw}$(ifconfig | grep inet)"
-  echo -e "\n${ylw}$(ifconfig | grep inet6)"
-  echo -e "\n${nc}"
+  echo -e "\n${white}$(ifconfig | grep -e ^en*0* -e inet)"
 }
 
 sys_info() {

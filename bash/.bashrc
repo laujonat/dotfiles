@@ -35,7 +35,6 @@ export CFG="/home/$USER/cfg"
 for aa in "$CFG/aliases/".[^.]*
 do
   DIR="$( cd "$( dirname "$HOME/$aa" )" >/dev/null 2>&1 && pwd )"
-  echo "alias dir $DIR"
   [[ -f "$DIR/$aa" ]] && source "$DIR/$aa"
 done
 
