@@ -2,6 +2,7 @@
 
 # edit_hosts: Edit /etc/hosts file
 alias edit_hosts='sudo edit /etc/hosts'
+alias sshd-logs='sudo tail -f /var/log/auth.log'
 
 # find_pid: Find out the pid of a specified process
 # -----------------------------------------------------

@@ -7,6 +7,11 @@ alias cp='cp -i'
 # move file interactive
 alias mv='mv -i'
 
+# logkeys
+alias export-keymap='sudo logkeys --export-keymap en_US.keymap'
+alias logkeys-start='sudo logkeys --start --keymap ~/i18n/en_US.keymap'
+alias logkeys-stop='sudo logkeys --k'
+alias fllk='sudo tail --follow /var/log/logkeys.log'
 
 # Search
 alias grep='grep $grep_opts'
@@ -26,6 +31,6 @@ alias ~='cd ~'                              # ~:            Go Home
 alias path='echo -e ${PATH//:/\\n}'         # path:         Echo all executable Paths
 alias dotfiles='cd ~/.dotfiles'                  # dotfiles:     Go to custom dotfiles directory
 
-# OSX
-alias fix_stty='stty sane'                  # fix_stty:     Restore terminal settings when screwed up
-alias DT='tee ~/Desktop/terminalOut.txt'    # DT:           Pipe content to file onto Desktop
+# Utilities
+alias fixtty='reset; stty sane; tput rs1; clear; echo -e "\033c"'
+alias DT='tee ~/Desktop/terminalOut.txt'    

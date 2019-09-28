@@ -15,17 +15,18 @@
 ii() {
   echo -e "\n${ylw}Logged on as: ${nc}$USER"
   echo -e "${ylw}Hostname: ${nc}$HOSTNAME"
-  echo -e "\n${grn}Current date: ${nc}" ; date
-  echo -e "\n${grn}System information: ${nc}" ; sys_info
-  echo -e "\n${grn}Machine stats: ${nc}" ; uptime
+  echo -e "\n${grn}Current date: ${nc}"; date
+  echo -e "\n${grn}System information: ${nc}"; sys_info
+  echo -e "\n${grn}Machine stats: ${nc}"; uptime
   echo -e "\n${grn}LAN: ${white} " ; iip
   echo -e "\n${nc}"
 }
 
 #   ip:  display IPv4 and IPv6 public addresses
 #   -------------------------------------------------------------------
+
 iip() {
-  echo -e "\n${white}$(ifconfig | grep -e ^en*0* -e inet)"
+  echo -e "${gry}$(ifconfig | grep -e ^en*0* -e inet)"
 }
 
 sys_info() {

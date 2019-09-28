@@ -4,27 +4,33 @@ set -e
 
 export CFG="/home/${USER}/cfg"
 
+link_base() {
+  ln -sfvn $CFG/.go $HOME/.go
+  ln -sfvn $CFG/.os $HOME/.os
+}
+
 link_aliases() {
-  ln -sfn $CFG/aliases/.aliases $HOME/.aliases && 
-  ln -sfn $CFG/aliases/.omzsh_aliases $HOME/.omzsh_aliases
+  ln -sfvn $CFG/aliases/.aliases $HOME/.aliases && 
+  ln -sfvn $CFG/aliases/.omzsh_aliases $HOME/.omzsh_aliases
 }
 
 link_custom() {
-  ln -sfn $CFG/custom/.better_bin $HOME/.better_bin && 
-  ln -sfn $CFG/custom/.better_http $HOME/.better_http && 
-  ln -sfn $CFG/custom/.better_ifconfig $HOME/.better_ifconfig &&
-  ln -sfn $CFG/custom/.better_nmap $HOME/.better_nmap
+  ln -sfvn $CFG/custom/.better_bin $HOME/.better_bin && 
+  ln -sfvn $CFG/custom/.better_http $HOME/.better_http && 
+  ln -sfvn $CFG/custom/.better_ifconfig $HOME/.better_ifconfig &&
+  ln -sfvn $CFG/custom/.better_nmap $HOME/.better_nmap
 }
 
 link_bash() {
-  ln -sfn $CFG/bash/.colors $HOME/.colors &&
-  ln -sfn $CFG/bash/.bash_logout $HOME/.bash_logout && 
-  ln -sfn $CFG/bash/.bash_profile $HOME/.bash_profile &&
-  ln -sfn $CFG/bash/.bashrc $HOME/.bashrc
+  ln -sfvn $CFG/bash/.colors $HOME/.colors &&
+  ln -sfvn $CFG/bash/.bash_logout $HOME/.bash_logout && 
+  ln -sfvn $CFG/bash/.bash_profile $HOME/.bash_profile &&
+  ln -sfvn $CFG/bash/.bashrc $HOME/.bashrc
 }
 
 
 echo '------ Symlinking... ------'
+link_base
 link_aliases
 link_custom
 link_bash
@@ -52,6 +58,4 @@ if [ "$DIR" != "$RDIR" ]; then
 fi
 
 echo "DIR is '$DIR'"
-DIR="$( cd "$( dirname "$BASH_SOURCE[0]" )" >/dev/null 2>&1 && pwd )"
-cat $DIR/.bash_profile
 source $DIR/.bash_profile

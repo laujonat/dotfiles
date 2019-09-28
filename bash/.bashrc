@@ -28,6 +28,7 @@ export LESSOPEN="|/usr/loca/bin/lesspipe.sh %s" LESS_ADVANCED_PREPROCESSOR=1
 # NOTE: .bashrc is intended for use in interactive, non-login shells.
 # Custom aliases, functions, and shell configurations sourced here.
 export CFG="/home/$USER/cfg"
+[[ -f "$HOME/.go" ]] && source "$HOME/.go"
 [[ -f "$HOME/.os" ]] && source "$HOME/.os"
 [[ -f "$HOME/.colors" ]] && source "$HOME/.colors"
 
@@ -38,19 +39,22 @@ do
   [[ -f "$DIR/$aa" ]] && source "$DIR/$aa"
 done
 
-# custom functions & aliases
+# utils
 for custom_cfg in "$CFG/custom/".[^.]*
 do
   DIR="$( cd "$( dirname "$HOME/$custom_cfg" )" >/dev/null 2>&1 && pwd )"
   [[ -f "$DIR/$custom_cfg" ]] && source "$DIR/$custom_cfg"
 done
 
+# Linux does not support xterm-256color terminal
+TERM=xterm
+export $TERM
 
 # configure bash color prompt
 export PATH="$PATH:/usr/local/bin/"
 export CLICOLOR=1
 export LSCOLORS=ExFxBxDxCxegedabagacad
-export PS1='[${blu}\u${red}@${grn}\h:${nc}\W]🌱 '
+export PS1="[${blu}\u${red}@${grn}\\h:${nc}\W]${light_cyn}$(parse_git_branch)${nc} "
 
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash

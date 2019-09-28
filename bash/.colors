@@ -19,11 +19,13 @@ export COLOR_GRAY='\e[0;30m'
 export COLOR_LIGHT_GRAY='\e[0;37m'
 
 export nc=$'\e[0m'
+export gry=$'\e0;30'
 export red=$'\e[0;31m'
 export grn=$'\e[0;32m'
 export blu=$'\e[0;34m'
 export mag=$'\e[0;35m'
 export cyn=$'\e[1;36m'
+export light_cyn=$'\e[0;36m'
 export white=$'\e[1;37m'
 export ylw=$'\e[0;33m'
 

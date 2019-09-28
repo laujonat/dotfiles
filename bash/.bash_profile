@@ -6,8 +6,11 @@
 # export LESSOPEN="|/usr/local/bin/lesspipe.sh %s"
 # export LESSCLOSE="/usr/bin/lesspipe %s %s";
 
-echo -e '[bash_profile]\n'
-shopt -q login_shell && echo 'Login shell. Using .bash_profile' || echo 'Interactive non-login shell. Using .profile'
+
+
+echo -e "\n$(bash --version | head -3)\n"
+shopt -q login_shell && echo -e "[Login shell]\nSourced .bash_profile" || echo -e "[Interactive non-login shell]\nSourced .profile"
+echo -e "\n"
 
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
@@ -15,7 +18,7 @@ else
   export EDITOR='vim'
 fi
 
-[[ -s "$HOME/.bashrc" ]] && source "$HOME/.bashrc"
+[[ -f "$HOME/.bashrc" ]] && source "$HOME/.bashrc"
 
 # ii: Outputs system information
-ii
+# ii
