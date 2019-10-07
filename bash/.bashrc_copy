@@ -24,14 +24,27 @@ shopt -s checkwinsize
 export LESSOPEN="|/usr/local/bin/lesspipe.sh %s" LESS_ADVANCED_PREPROCESSOR=1
 # [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-# NOTE .bashrc is intended for use in interactive, non-login shells.
+# NOTE: .bashrc is intended for use in interactive, non-login shells.
 # Custom aliases, functions, and shell configurations sourced here.
-# ------------------------------------------------------------------
-# Assumes $REPO/scripts/setup.sh was run
+REPO="`git rev-parse --show-toplevel`"
+[[ -f "$REPO/go" ]] && source "$HOME/.go"
 [[ -f "$REPO/colors" ]] && source "$HOME/.colors"
 [[ -f "$REPO/prompt" ]] && source "$HOME/.prompt"
 [[ -f "$REPO/gen" ]] && source "$HOME/.gen"
-[[ -f "$REPO/go" ]] && source "$HOME/.go"
+
+# aliases
+#for aa in "$REPO/aliases/".[^.]*
+#do
+#DIR="$( cd "$( dirname "$HOME/$aa" )" >/dev/null 2>&1 && pwd )"
+#[[ -f "$DIR/$aa" ]] && source "$DIR/$aa"
+#done
+
+# utils
+#for custom_cfg in "$REPO/custom/".[^.]*
+#do
+#DIR="$( cd "$( dirname "$HOME/$custom_cfg" )" >/dev/null 2>&1 && pwd )"
+#[[ -f "$DIR/$custom_cfg" ]] && source "$DIR/$custom_cfg"
+#done
 
 TERM=xterm
 export $TERM

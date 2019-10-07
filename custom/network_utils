@@ -12,7 +12,7 @@
 
 #   ii:  display useful host related informaton
 #   -------------------------------------------------------------------
-ii() {
+function ii() {
   echo -e "\n${ylw}Logged on as: ${nc}$USER"
   echo -e "${ylw}Hostname: ${nc}$HOSTNAME"
   echo -e "\n${grn}Current date: ${nc}"; date
@@ -25,11 +25,11 @@ ii() {
 #   ip:  display IPv4 and IPv6 public addresses
 #   -------------------------------------------------------------------
 
-iip() {
+function iip() {
   echo -e "${gry}$(ifconfig | grep -e ^en*0* -e inet)"
 }
 
-sys_info() {
+function sys_info() {
   os=`uname -s`
   os_r=`uname -r`
   os_v=`uname -v`
@@ -37,3 +37,18 @@ sys_info() {
 
   echo -e "${nc} ${os} ${os_r} ${os_v} ${p_arch}"
 }
+
+# edit_hosts: Edit /etc/hosts file
+alias edit_hosts='sudo edit /etc/hosts'
+alias sshd-logs='sudo tail -f /var/log/auth.log'
+
+# find_pid: Find out the pid of a specified process
+# -----------------------------------------------------
+# Note that the command name can be specified via a regex
+# E.g. findPid '/d$/' finds pids of all processes with names ending in 'd'
+# Without the 'sudo' it will only find processes of the current user
+#   -----------------------------------------------------
+function find-pid() { lsof -t -c "$@" ; }
+
+# http_headers:      Grabs headers from web page
+function http-headers() { /usr/bin/curl -I -L $@ ; }

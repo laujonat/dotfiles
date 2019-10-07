@@ -1,0 +1,5 @@
+#!/bin/bash
+
+export CLICOLOR=1
+export LSCOLORS=ExFxBxDxCxegedabagacad
+export PS1="[${blu}\u${red}@${grn}\\h:${nc}\W]${light_cyn}$(parse_git_branch)${nc} "

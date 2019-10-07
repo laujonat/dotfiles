@@ -19,6 +19,3 @@ else
 fi
 
 [[ -f "$HOME/.bashrc" ]] && source "$HOME/.bashrc"
-
-# ii: Outputs system information
-# ii

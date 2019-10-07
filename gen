@@ -1,5 +1,13 @@
 #!/bin/bash
 
+if type nvim >/dev/null 2>/dev/null; then
+  echo -e `\n vim --version | head -n 1`
+else
+  alias vim=nvim
+  echo -e `\n nvim --version | head -n 1`
+fi
+
+alias als="vim ~/.gen"
 # List/Search
 alias afind='ack -il'
 alias history='fc -l 1'
@@ -7,14 +15,44 @@ alias l='ls -lah'
 alias la='ls -lAh'
 alias ll='ls -lh'
 alias lsa='ls -lah'
-alias ls='ls --color=auto'
 alias md='mkdir -p'
 alias sudo='sudo '
 alias po='popd'
 alias pu='pushd'
 alias rd='rmdir'
+alias cp='cp -i'
+alias mv='mv -i'
 
-# https://github.com/robbyrussell/oh-my-zsh/blob/master/plugins/git/git.plugin.zsh
+# logkeys
+alias export-keymap='sudo logkeys --export-keymap en_US.keymap'
+alias logkeys-start='sudo logkeys --start --keymap ~/i18n/en_US.keymap'
+alias logkeys-stop='sudo logkeys --k'
+alias fllk='sudo tail --follow /var/log/logkeys.log'
+
+# Search
+alias grep='grep $grep_opts'
+alias egrep='egrep $grep_opts'
+alias fgrep='fgrep $grep_opts'
+
+# Bash
+alias bp='vim ~/.bash_profile'
+alias srcbp='source ~/.bash_profile'
+alias bsh='vim ~/.bashrc'
+alias srcbsh='source ~/.bashrc'
+alias pf='vim ~/.profile'
+alias srcpf='source ~/.profile'
+
+# Directories
+alias ~='cd ~'                                  # ~:            Go Home
+alias path='echo -e ${PATH//:/\\n}'             # path:         Echo all executable Paths
+alias dotfiles='cd ~/.dotfiles'                 # dotfiles:     Go to custom dotfiles directory
+
+# Utilities
+alias fixtty='reset; stty sane; tput rs1; clear; echo -e "\033c"'
+alias DT='tee ~/Desktop/terminalOut.txt'
+#!/bin/bash
+# Aliases ported from github.com/robbyrussell/oh-my-zsh/
+
 function current_branch() {
   git_current_branch
 }
@@ -255,3 +293,105 @@ alias glum='git pull upstream master'
 
 alias gwch='git whatchanged -p --abbrev-commit --pretty=medium'
 alias gwip='git add -A; git rm $(git ls-files --deleted) 2> /dev/null; git commit --no-verify --no-gpg-sign -m "--wip-- [skip ci]"'
+#!/bin/bash
+
+# memHogsTop, memHogsPs:  Find memory hogs
+# ----------------------------------------------------
+alias memHogsTop='top -l 1 -o rsize | head -20'
+alias memHogsPs='ps wwaxm -o pid,stat,vsize,rss,time,command | head -10'
+alias cpu_hogs='ps wwaxr -o pid,stat,%cpu,time,command | head -10' #cpuHogs:  Find CPU hogs
+alias topForever='top -l 9999999 -s 10 -o cpu' # topForever:  Continual 'top' listing (every 10 seconds)
+alias ttop="top -R -F -s 10 -o rsize" # ttop:  Recommended 'top' invocation to minimize resources
+
+# Makes new Dir and jumps inside
+mkcd () {
+  mkdir -p "$1" && cd "$1";
+}
+
+# Opens any file in MacOS Quicklook Preview
+ql () {
+  qlmanage -p "$*" >& /dev/null;
+}
+
+# Moves file to Trash
+trash () {
+  command mv "$@" ~/.Trash ;
+}
+
+# Find the file under the current directory
+ff () {
+  /usr/bin/find . -name "$@" ;
+}
+
+# Find the file whose name starts with the givens string
+ffs () {
+  /usr/bin/find . -name "$@"'*' ;
+}
+
+# Find file whos name ends with a given string
+ffe () {
+  /usr/bin/find . -name '*'"$@" ;
+}
+
+
+# spotlight: Search for a file using MacOS Spotlight's metadata
+spotlight () { mdfind "kMDItemDisplayName == '$@'wc"; }
+
+
+# my_ps: List processes owned by my user:
+# ------------------------------------------------------------
+my_ps() { ps $@ -u $USER -o pid,%cpu,%mem,start,time,bsdtime,command ; }
+#!/bin/bash/
+#  ---------------------------------------------------------------------------
+#  Description:  This file holds human readible networking utils.
+#  Motivation:   Shortcut cmds <ifconfig> | ps aux | ipconfig | ipfw
+#  ---------------------------------------------------------------------------
+#alias lsockU='sudo /usr/sbin/lsof -nP | grep UDP'   # lsockU:       Display only open UDP sockets
+#alias lsockT='sudo /usr/sbin/lsof -nP | grep TCP'   # lsockT:       Display only open TCP sockets
+#alias ipInfo0='ipconfig getpacket en0'              # ipInfo0:      Get info on connections for en0
+#alias ipInfo1='ipconfig getpacket en1'              # ipInfo1:      Get info on connections for en1
+#alias openPorts='sudo lsof -i | grep LISTEN'        # openPorts:    All listening connections
+#alias showBlocked='sudo ipfw list'                  # showBlocked:  All ipfw rules inc/ blocked IP
+
+#   ii:  display useful host related informaton
+#   -------------------------------------------------------------------
+function ii() {
+  echo -e "\n${ylw}Logged on as: ${nc}$USER"
+  echo -e "${ylw}Hostname: ${nc}$HOSTNAME"
+  echo -e "\n${grn}Current date: ${nc}"; date
+  echo -e "\n${grn}System information: ${nc}"; sys_info
+  echo -e "\n${grn}Machine stats: ${nc}"; uptime
+  echo -e "\n${grn}LAN: ${white} " ; iip
+  echo -e "\n${nc}"
+}
+
+#   ip:  display IPv4 and IPv6 public addresses
+#   -------------------------------------------------------------------
+
+function iip() {
+  echo -e "${gry}$(ifconfig | grep -e ^en*0* -e inet)"
+}
+
+function sys_info() {
+  os=`uname -s`
+  os_r=`uname -r`
+  os_v=`uname -v`
+  p_arch=`uname -p`
+
+  echo -e "${nc} ${os} ${os_r} ${os_v} ${p_arch}"
+}
+
+# edit_hosts: Edit /etc/hosts file
+alias edit_hosts='sudo edit /etc/hosts'
+alias sshd-logs='sudo tail -f /var/log/auth.log'
+
+# find_pid: Find out the pid of a specified process
+# -----------------------------------------------------
+# Note that the command name can be specified via a regex
+# E.g. findPid '/d$/' finds pids of all processes with names ending in 'd'
+# Without the 'sudo' it will only find processes of the current user
+#   -----------------------------------------------------
+function find-pid() { lsof -t -c "$@" ; }
+
+# http_headers:      Grabs headers from web page
+function http-headers() { /usr/bin/curl -I -L $@ ; }
