@@ -28,15 +28,12 @@ export LESSOPEN="|/usr/local/bin/lesspipe.sh %s" LESS_ADVANCED_PREPROCESSOR=1
 # Custom aliases, functions, and shell configurations sourced here.
 # ------------------------------------------------------------------
 # Assumes $REPO/scripts/setup.sh was run
-[[ -f "$REPO/colors" ]] && source "$HOME/.colors"
-[[ -f "$REPO/prompt" ]] && source "$HOME/.prompt"
-[[ -f "$REPO/gen" ]] && source "$HOME/.gen"
-[[ -f "$REPO/go" ]] && source "$HOME/.go"
+[[ -f "$HOME/.colors" ]] && source "$HOME/.colors"
+[[ -f "$HOME/.gen" ]] && source "$HOME/.gen"
+[[ -f "$HOME/.go" ]] && source "$HOME/.go"
 
 TERM=xterm
 export $TERM
-
-# configure bash color prompt
 export PATH="$PATH:/usr/local/bin/"
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash

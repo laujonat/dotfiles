@@ -4,7 +4,7 @@
 ```sh
 $ cd
 $ git clone git@github.com:laujonat/bash.git ~/dir
-$ sh dir/scripts/setup.sh
+$ bash dir/scripts/setup.sh
 ```
 
 Environment configurations are aggregated into the file `~/.gen` when `scripts/setup.sh` is run. Modify as you see fit.
