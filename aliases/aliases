@@ -7,8 +7,11 @@ else
   nvim --version | head -n 1
 fi
 
+# Source from script to regenerate .gen
+alias srcbash="source $REPO/scripts/setup.sh"
+
+# Basics
 alias als="vim ~/.gen"
-# List/Search
 alias afind='ack -il'
 alias history='fc -l 1'
 alias l='ls -lah'

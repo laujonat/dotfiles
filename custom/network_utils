@@ -25,8 +25,28 @@ function ii() {
 #   ip:  display IPv4 and IPv6 public addresses
 #   -------------------------------------------------------------------
 
-function iip() {
-  echo -e "${gry}$(ifconfig | grep -e ^en*0* -e inet)"
+
+IP4=$grn
+IP6=$blu
+IFACE=$ylw
+DEFAULT_ROUTE=$gry
+IFCONFIG_CMD=$(which ifconfig)
+IP_CMD=$(which ip)
+
+function colored_ip() {
+  ${IP_CMD} $@ | sed \
+    -e "s/inet [^ ]\+ /${IP4}&${nc}/g"\
+    -e "s/inet6 [^ ]\+ /${IP6}&${nc}/g"\
+    -e "s/^default via .*$/${DEFAULT_ROUTE}&${nc}/"\
+    -e "s/^\([0-9]\+: \+\)\([^ \t]\+\)/\1${IFACE}\2${nc}/"
+}
+
+function colored_ifconfig() {
+  ${IFCONFIG_CMD} $@ | sed \
+    -e "s/inet [^ ]\+ /${IP4}&${nc}/g"\
+    -e "s/inet6 [^ ]\+ /${IP6}&${nc}/g"\
+    -e "s/^default via .*$/${DEFAULT_ROUTE}&${nc}/"\
+    -e "s/^\([0-9]\+: \+\)\([^ \t]\+\)/\1${IFACE}\2${nc}/"
 }
 
 function sys_info() {
@@ -38,9 +58,10 @@ function sys_info() {
   echo -e "${nc} ${os} ${os_r} ${os_v} ${p_arch}"
 }
 
-# edit_hosts: Edit /etc/hosts file
-alias edit_hosts='sudo edit /etc/hosts'
-alias sshd-logs='sudo tail -f /var/log/auth.log'
+alias ip='colored_ip'
+alias ifconfig='colored_ifconfig'
+alias edit_hosts='sudo edit /etc/hosts' # edit_hosts: Edit /etc/hosts file
+alias sshd-logs='sudo tail -f /var/log/auth.log' # tail ssh auth log
 
 # find_pid: Find out the pid of a specified process
 # -----------------------------------------------------
