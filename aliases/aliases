@@ -11,7 +11,7 @@ fi
 alias srcbash="source $REPO/scripts/setup.sh"
 
 # Basics
-alias als="vim ~/.gen"
+alias als="vim $REPO/aliases/aliases"
 alias afind='ack -il'
 alias history='fc -l 1'
 alias l='ls -lah'

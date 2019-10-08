@@ -3,7 +3,7 @@
 #set -e
 current_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 cd $current_dir
-REPO="`git rev-parse --show-toplevel`"
+export REPO="`git rev-parse --show-toplevel`"
 
 function system_specifics() {
 	OS="`uname`"
