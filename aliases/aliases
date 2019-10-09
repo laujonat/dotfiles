@@ -1,10 +1,10 @@
 #!/bin/bash
 
 if type nvim >/dev/null 2>/dev/null; then
-  vim --version | head -n 1
-else
   alias vim=nvim
   nvim --version | head -n 1
+else
+  vim --version | head -n 1
 fi
 
 # Source from script to regenerate .gen
