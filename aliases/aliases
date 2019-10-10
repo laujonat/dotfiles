@@ -1,14 +1,11 @@
 #!/bin/bash
 
-if type nvim >/dev/null 2>/dev/null; then
-  alias vim=nvim
-  nvim --version | head -n 1
-else
-  vim --version | head -n 1
+if type nvim >/dev/null 2>/dev/null; then 
+  alias vim=nvim 
 fi
 
 # Source from script to regenerate .gen
-alias srcbash="source $REPO/scripts/setup.sh"
+alias srcbash=". $REPO/install"
 
 # Basics
 alias als="vim $REPO/aliases/aliases"

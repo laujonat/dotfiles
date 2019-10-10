@@ -32,8 +32,11 @@ export LESSOPEN="|/usr/local/bin/lesspipe.sh %s" LESS_ADVANCED_PREPROCESSOR=1
 [[ -f "$HOME/.gen" ]] && source "$HOME/.gen"
 [[ -f "$HOME/.go" ]] && source "$HOME/.go"
 
-TERM=xterm
-export $TERM
+if [[ $TERM =~ .*"-256color".* ]]; then : 
+else
+  export TERM=$TERM-256color
+fi
+
 export PATH="$PATH:/usr/local/bin/"
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash

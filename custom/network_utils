@@ -18,7 +18,6 @@ function ii() {
   echo -e "\n${grn}Current date: ${nc}"; date
   echo -e "\n${grn}System information: ${nc}"; sys_info
   echo -e "\n${grn}Machine stats: ${nc}"; uptime
-  echo -e "\n${grn}LAN: ${white} " ; iip
   echo -e "\n${nc}"
 }
 

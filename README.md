@@ -4,9 +4,9 @@
 
 Install 
 ```sh
-$ cd
-$ git clone git@github.com:laujonat/bash.git ~/bash_files
-$ source bash_files/scripts/setup.sh
+$ cd ~
+$ git clone git@github.com:laujonat/bash.git
+$ ./bash/install
 ```
 
 Source from script to regenerate ~/.gen file
