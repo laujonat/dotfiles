@@ -1,4 +1,6 @@
-#!/bin/bash
+# ----------
+# | Prompts |
+# ----------
 
 # http://linux-sxs.org/housekeeping/lscolors.html
 #0   = default colour

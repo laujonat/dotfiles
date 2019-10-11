@@ -20,23 +20,20 @@ shopt -s histappend
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
-# make less more friendly for non-text input files, see lesspipe(1)
-export LESSOPEN="|/usr/local/bin/lesspipe.sh %s" LESS_ADVANCED_PREPROCESSOR=1
-# [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
-
 # NOTE .bashrc is intended for use in interactive, non-login shells.
 # Custom aliases, functions, and shell configurations sourced here.
 # ------------------------------------------------------------------
-# Assumes $REPO/scripts/setup.sh was run
-[[ -f "$HOME/.colors" ]] && source "$HOME/.colors"
-[[ -f "$HOME/.gen" ]] && source "$HOME/.gen"
-[[ -f "$HOME/.go" ]] && source "$HOME/.go"
+[ -f ~/.sources ] && source ~/.sources
 
-if [[ $TERM =~ .*"-256color".* ]]; then : 
+if [[ $TERM =~ .*"-256color".* ]]; then :
 else
   export TERM=$TERM-256color
 fi
 
-export PATH="$PATH:/usr/local/bin/"
+# make less more friendly for non-text input files, see lesspipe(1)
+export LESSOPEN="|/usr/local/bin/lesspipe.sh %s" LESS_ADVANCED_PREPROCESSOR=1
+# [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
+export PATH="$PATH:/usr/local/bin/"
+[ -f ~/.go ] && source ~/.go
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash

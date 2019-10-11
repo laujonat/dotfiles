@@ -1,4 +1,6 @@
-#!/bin/bash
+# ------------------
+# | Common Aliases |
+# ------------------
 
 if type nvim >/dev/null 2>/dev/null; then 
   alias vim=nvim 
@@ -8,7 +10,7 @@ fi
 alias srcbash=". $REPO/install"
 
 # Basics
-alias als="vim $REPO/aliases/aliases"
+alias als="vim $REPO/bash/scripts/aliases"
 alias afind='ack -il'
 alias history='fc -l 1'
 alias l='ls -lah'
@@ -22,12 +24,6 @@ alias pu='pushd'
 alias rd='rmdir'
 alias cp='cp -i'
 alias mv='mv -i'
-
-# logkeys
-alias export-keymap='sudo logkeys --export-keymap en_US.keymap'
-alias logkeys-start='sudo logkeys --start --keymap ~/i18n/en_US.keymap'
-alias logkeys-stop='sudo logkeys --k'
-alias fllk='sudo tail --follow /var/log/logkeys.log'
 
 # Search
 alias grep='grep $grep_opts'

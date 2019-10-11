@@ -1,6 +1,8 @@
-#!/bin/bash
-# Aliases ported from github.com/robbyrussell/oh-my-zsh/
+# ---------------
+# | Git Aliases | 
+# ---------------
 
+# Aliases ported from github.com/robbyrussell/oh-my-zsh/
 function current_branch() {
   git_current_branch
 }
