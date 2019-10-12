@@ -4,12 +4,13 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 cd $DIR
 export REPO="`git rev-parse --show-toplevel`"
-BASH_DIR=$REPO/bash
-SCRIPTS=$BASH_DIR/scripts
-BASH_SRC=bash_"$(date +%s)"
-touch -f $BASH_SRC
 
 function init() {
+  BASH_DIR=$REPO/bash
+  SCRIPTS=$BASH_DIR/scripts
+  BASH_SRC=bash_"$(date +%s)"
+  touch -f $BASH_SRC
+
   echo -e "Initialized from $REPO"
   mkdir -p $REPO/history
   mv -v $REPO/bash_* $REPO/history
