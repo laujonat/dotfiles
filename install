@@ -37,7 +37,8 @@ function generate_config() {
 
 # Path mismatches in supported command flags
 function os_patch() {
-  OS="`uname`"
+  OS="`uname -s`"
+  ARCH="uname -m"
   case $OS in
     'Linux')
       OS='Linux'
@@ -53,12 +54,13 @@ function os_patch() {
     *) ;;
   esac
 }
-# ln -s /mnt/usr/lib/* /usr/lib/
+
 function link_bash() {
-  ln -fsn -v $REPO/bash/bash_logout $HOME/.bash_logout
-  ln -fsn -v $REPO/bash/bash_profile $HOME/.bash_profile
-  ln -fsn -v $REPO/bash/bashrc $HOME/.bashrc
-  ln -fsn -v $REPO/bash/profile $HOME/.profile
+  for f in $BASH_DIR/*
+  do
+    FILENAME=$(basename $f)
+    [[ -f $f ]] && ln -fsn -v $f $HOME/.$FILENAME
+  done
 }
 
 init
