@@ -1,0 +1,56 @@
+#!/bin/bash
+dir="$( dirname "$0" )"
+cd "$dir/.."
+ruby="$(which ruby || rbenv which ruby)"
+
+# Install Homebrew if not installed
+function prompt() {
+  $(which -s brew)
+  if [[ $? == 0 ]] ; then
+    while true; do
+      echo "Some packages in this repository are installed using Homebrew."
+      read -p "Do you wish to install this now? (y/Y)es/(n/N)o `echo $'\n> '`" yn
+      case $yn in
+        [Yy]* ) install_brew; break;;
+        [Nn]* ) exit;;
+        * ) echo $'\n> ';;
+      esac
+    done
+  else
+    echo "Updating Homebrew.."
+    brew update
+  fi
+}
+
+function install_brew() {
+  os="$(uname -s)"
+
+  case $os in
+    "Linux")
+      install_linuxbrew
+      ;;
+    "Darwin")
+      install_macosbrew
+      ;;
+  esac
+}
+
+function install_linuxbrew() {
+  echo ">Installing Linuxbrew"
+  sudo apt-get update
+  sudo apt-get upgrade
+  sudo apt-get install build-essential curl file git
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
+  echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
+}
+
+function install_macosbrew() {
+  echo ">Installing Homebrew"
+  $ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  brew doctor
+}
+
+# Runs brew installation for first script execution
+if [ -d "$dir/history" ];
+then :; else prompt
+fi
