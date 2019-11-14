@@ -2,66 +2,69 @@
 
 #set -e
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+echo "CHANGING TO $DIR"
 cd $DIR
+eval $DIR
 export REPO="`git rev-parse --show-toplevel`"
 
 function init() {
-  BASH_DIR=$REPO/bash
-  SCRIPTS=$BASH_DIR/scripts
-  BASH_SRC=bash_"$(date +%s)"
-  touch -f $BASH_SRC
+	BASH_DIR=$REPO/bash
+	SCRIPTS=$BASH_DIR/scripts
+	BASH_SRC=bash_"$(date +%s)"
+	touch -f $BASH_SRC
 
-  echo -e "Initialized from $REPO"
-  mkdir -p $REPO/history
-  mv -v $REPO/bash_* $REPO/history
-  script_init
+	echo -e "Initialized from $REPO"
+	mkdir -p $REPO/history
+	mv -v $REPO/bash_* $REPO/history
+	script_init
 }
 
 function script_init() {
-  generate_config
+	generate_config
 
-  echo -e "\nLinking source $BASH_SRC to target $HOME/.sources"
-  ln -fsn -v $REPO/$BASH_SRC $HOME/.sources
+	echo -e "\nLinking source $BASH_SRC to target $HOME/.sources"
+	ln -fsn -v $REPO/$BASH_SRC $HOME/.sources
 
-  echo "Done."
+	echo "Done."
 }
 
 function generate_config() {
-  echo -e "\nGenerating sources from $SCRIPTS"
-  for f in $SCRIPTS/*
-  do
-    cat $f >> $BASH_SRC
-  done
-  os_patch
-  echo "Done."
+	echo -e "\nGenerating sources from $SCRIPTS"
+	for f in $SCRIPTS/*
+	do
+		echo $f
+		cat $f >> $BASH_SRC
+	done
+	os_patch
+	echo "Done."
 }
 
 # Path mismatches in supported command flags
 function os_patch() {
-  OS="`uname -s`"
-  ARCH="uname -m"
-  case $OS in
-    'Linux')
-      OS='Linux'
-      echo "alias ls='ls --color=auto'" >> $BASH_SRC
-      ;;
-    'FreeBSD')
-      OS='FreeBSD'
-      echo "alias ls='ls -G'" >> $BASH_SRC
-      ;;
-    'Darwin')
-      OS='Mac'
-      ;;
-    *) ;;
-  esac
+	OS="`uname -s`"
+	ARCH="uname -m"
+	case $OS in
+		'Linux')
+			OS='Linux'
+			echo "alias ls='ls --color=auto'" >> $BASH_SRC
+			;;
+		'FreeBSD')
+			OS='FreeBSD'
+			echo "alias ls='ls -G'" >> $BASH_SRC
+			;;
+		'Darwin')
+			OS='Mac'
+			;;
+		*) ;;
+	esac
 }
 
 function link_bash() {
-  for f in $BASH_DIR/*
-  do
-    FILENAME=$(basename $f)
-    [[ -f $f ]] && ln -fsn -v $f $HOME/.$FILENAME
-  done
+	for f in $BASH_DIR/*
+	do
+		FILENAME=$(basename $f)
+		[[ -f $f ]] && ln -fsn -v $f $HOME/.$FILENAME
+	done
 }
 
 init
@@ -70,3 +73,4 @@ link_bash
 echo '------ Done ------'
 
 source $BASH_DIR/bash_profile
+source $HOME/.sources

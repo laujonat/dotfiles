@@ -1,16 +1,15 @@
 # ------------------
 # | Common Aliases |
 # ------------------
-
-if type nvim >/dev/null 2>/dev/null; then 
-  alias vim=nvim 
+if type nvim >/dev/null 2>/dev/null; then
+alias vim=nvim
 fi
-
+CURRENT="$(pwd)"
+#SCRIPT="realpath --relative-path=$CURRENT $(pwd)"
 # Source from script to regenerate .gen
-alias srcbash=". $REPO/install"
-
+alias srcbash=". $(pwd)/install"
 # Basics
-alias als="vim $REPO/bash/scripts/aliases"
+alias als="vim $CURRENT/aliases"
 alias afind='ack -il'
 alias history='fc -l 1'
 alias l='ls -lah'
@@ -41,7 +40,6 @@ alias srcpf='source ~/.profile'
 # Directories
 alias ~='cd ~'                                  # ~:            Go Home
 alias path='echo -e ${PATH//:/\\n}'             # path:         Echo all executable Paths
-alias dotfiles='cd ~/.dotfiles'                 # dotfiles:     Go to custom dotfiles directory
 
 # Utilities
 alias fixtty='reset; stty sane; tput rs1; clear; echo -e "\033c"'

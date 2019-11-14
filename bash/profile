@@ -1,7 +1,6 @@
 #!/bin/bash
 
-#export DOTFILES="$HOME/.dotfiles"
-#export SANDBOX="$HOME/.sandbox"
+#export REPO=$( cd '$( dirname "${BASH_SOURCE[0]})'  >/dev/null 2>&1 && pwd )
 export LESSOPEN="|/usr/local/bin/lesspipe.sh %s" LESS_ADVANCED_PREPROCESSOR=1
 
 # set SSH_AUTH_SOCK env var to a fixed value
