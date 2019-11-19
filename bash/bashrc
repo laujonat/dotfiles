@@ -23,8 +23,8 @@ shopt -s checkwinsize
 # NOTE .bashrc is intended for use in interactive, non-login shells.
 # Custom aliases, functions, and shell configurations sourced here.
 # ------------------------------------------------------------------
-[ -f ~/.sources ] && source ~/.sources
-
+[[ -f ~/.sources ]] && source ~/.sources
+force_color_prompt=yes
 if [[ $TERM =~ .*"-256color".* ]]; then :
 else
   export TERM=$TERM-256color

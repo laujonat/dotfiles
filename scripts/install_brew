@@ -8,8 +8,8 @@ function prompt() {
   $(which -s brew)
   if [[ $? == 0 ]] ; then
     while true; do
-      echo "Some packages in this repository are installed using Homebrew."
-      read -p "Do you wish to install this now? (y/Y)es/(n/N)o `echo $'\n> '`" yn
+      echo "Required dependencies not found. For mac users, verify xcode-cli tools installation."
+      read -p "Do you wish to install missing packages now? (y/Y)es/(n/N)o `echo $'\n> '`" yn
       case $yn in
         [Yy]* ) install_brew; break;;
         [Nn]* ) exit;;
@@ -41,10 +41,15 @@ function install_linuxbrew() {
   sudo apt-get upgrade
   sudo apt-get install build-essential curl file git
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
-  echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
+  echo "eval \$($(brew --prefix)/bin/brew shellenv)" >> $HOME/.profile
 }
 
 function install_macosbrew() {
+  if ! [[ -x "$(hash xcode-select)" ]]; then
+    echo 'Installing xcode-select cli tools (Update if necessary)' >&2
+    echo  "eval $(xcode-select --install)"
+  fi
+
   echo ">Installing Homebrew"
   $ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
   brew doctor

@@ -4,9 +4,9 @@
 
 Install Bash
 ```sh
-$ cd ~
-$ git clone git@github.com:laujonat/bash.git
-$ ./bash/install
+$ cd ~ && mkdir <dotfile-direcotry>
+$ git clone git@github.com:laujonat/bash.git ~/<dotfiles-directory>
+$ . /<dotfiles-directory>/install
 ```
 
 Homebrew
