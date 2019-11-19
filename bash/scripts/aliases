@@ -4,12 +4,10 @@
 if type nvim >/dev/null 2>/dev/null; then
 alias vim=nvim
 fi
-CURRENT="$(pwd)"
-#SCRIPT="realpath --relative-path=$CURRENT $(pwd)"
-# Source from script to regenerate .gen
+
+dir="$(pwd)"
 alias srcbash=". $(pwd)/install"
-# Basics
-alias als="vim $CURRENT/aliases"
+alias als="vim $dir/aliases"
 alias afind='ack -il'
 alias history='fc -l 1'
 alias l='ls -lah'

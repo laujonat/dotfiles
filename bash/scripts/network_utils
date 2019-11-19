@@ -25,10 +25,10 @@ function ii() {
 #   -------------------------------------------------------------------
 
 
-IP4=$grn
-IP6=$blu
-IFACE=$ylw
-DEFAULT_ROUTE=$gry
+IP4='\033[0;32m'
+IP6='\033e[0;34m'
+IFACE='\033[0;33m'
+DEFAULT_ROUTE='\033;30'
 IFCONFIG_CMD=$(which ifconfig)
 IP_CMD=$(which ip)
 
@@ -38,7 +38,7 @@ function colored_ip() {
     -e "s/inet6 [^ ]\+ /${IP6}&${nc}/g"\
     -e "s/^default via .*$/${DEFAULT_ROUTE}&${nc}/"\
     -e "s/^\([0-9]\+: \+\)\([^ \t]\+\)/\1${IFACE}\2${nc}/"
-}
+  }
 
 function colored_ifconfig() {
   ${IFCONFIG_CMD} $@ | sed \
@@ -46,7 +46,7 @@ function colored_ifconfig() {
     -e "s/inet6 [^ ]\+ /${IP6}&${nc}/g"\
     -e "s/^default via .*$/${DEFAULT_ROUTE}&${nc}/"\
     -e "s/^\([0-9]\+: \+\)\([^ \t]\+\)/\1${IFACE}\2${nc}/"
-}
+  }
 
 function sys_info() {
   os=`uname -s`

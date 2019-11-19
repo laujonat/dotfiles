@@ -1,0 +1,31 @@
+#!/bin/bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+cd $DIR
+echo "Initialized from $DIR"
+echo $DIR
+function fzf_prompt() {
+  if ! [[ -x $(eval type fzf) ]] ; then
+    while true; do
+      echo "Install fzf fuzzy search into shell environment?"
+      read -p "(y)es/(n)o `echo $'\n> '`" yn
+      case $yn in
+        [Yy]* ) install_fzf_bash; break;;
+        [Nn]* ) exit;;
+        * ) echo $'\n> ';;
+      esac
+    done
+  else
+    echo "Nothing to do, Issue with fzf installation."
+  fi
+}
+
+function install_fzf_bash() {
+  eval "$(git clone --depth 1 https://github.com/junegunn/fzf.git $DIR/.fzf.bash)"
+  eval $DIR/.fzf.bash/install
+}
+
+
+if [ -d "$dir/.fzf" ];
+then :; else fzf_prompt
+fi

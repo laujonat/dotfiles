@@ -4,19 +4,24 @@
 
 Install Bash
 ```sh
-$ cd ~ && mkdir <dotfile-direcotry>
+$ cd ~ && mkdir -p dotfiles
 $ git clone git@github.com:laujonat/bash.git ~/<dotfiles-directory>
 $ . /<dotfiles-directory>/install
 ```
 
 Homebrew
 ```sh
-$ sh ./scripts/install_brew
+$ sh ~/.dotfiles/scripts/install_brew
 ```
 
-Source from script to regenerate ~/.sources file
+FZF Fuzzy Search - junegunn/fzf.vim
+```
+$ sh ~/.dotfiles/scripts/fzf_bash_setup
+```
+
+Source from script to regenerate ~/.sources file (Currently only works if you ran the install script from user home)
 ```sh
-$ srcbash # alias ./<install_directory>/install
+$ srcbash // alias for ./<install_directory>/install
 ```
 
 Environment configurations are aggregated into a generated file like bash_1570869366 when `./install` is run or sourced.

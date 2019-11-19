@@ -1,4 +1,7 @@
-gen
+.DS_STORE
+
 history/*
-          bash_*
-          sandbox
+          ./bash_*
+
+          /sandbox
+          scripts/.fzf*
