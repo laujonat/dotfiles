@@ -6,7 +6,6 @@ alias vim=nvim
 fi
 
 dir="$(pwd)"
-alias srcbash=". $(pwd)/install"
 alias als="vim $dir/aliases"
 alias afind='ack -il'
 alias history='fc -l 1'
@@ -42,3 +41,14 @@ alias path='echo -e ${PATH//:/\\n}'             # path:         Echo all executa
 # Utilities
 alias fixtty='reset; stty sane; tput rs1; clear; echo -e "\033c"'
 alias DT='tee ~/Desktop/terminalOut.txt'
+alias dotfiles='/Users/jon/.dotfiles/'
+alias dotfiles='cd /Users/jon/.dotfiles/'
+alias dotfiles='cd /Users/jon/.dotfiles'
+alias dotfiles='cd /Users/jon/.dotfiles'
+alias dotfiles='cd /Users/jon/.dotfiles'
+alias dotfiles='cd /Users/jon/.dotfiles'
+alias dotfiles='cd /Users/jon/.dotfiles'
+alias dotfiles='cd /Users/jon/.dotfiles'
+alias dotfiles='cd /Users/jon/.dotfiles'
+alias dotfiles='cd /Users/jon/.dotfiles'
+alias srcbash='. /Users/jon/.dotfiles/install'

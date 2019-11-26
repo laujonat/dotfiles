@@ -2,9 +2,8 @@
 
 #set -e
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-echo "CHANGING TO $DIR"
+echo "Repository is located at $DIR"
 cd $DIR
-eval $DIR
 export REPO="`git rev-parse --show-toplevel`"
 
 function init() {
@@ -13,7 +12,7 @@ function init() {
   BASH_SRC=bash_"$(date +%s)"
   touch -f $BASH_SRC
 
-  echo -e "Initialized from $REPO"
+  echo -e "Initializing from $REPO"
   mkdir -p $REPO/history
   mv -v $REPO/bash_* $REPO/history
   script_init
@@ -21,9 +20,8 @@ function init() {
 
 function script_init() {
   generate_config
-  if [[ -f $HOME/.sources ]]; then
-    rm $HOME/.sources
-  fi
+  echo "Flushing ~/.sources"
+  rm -rf $HOME/.sources || true
   echo -e "\nLinking source $BASH_SRC to target $HOME/.sources"
   ln -fsn -v $REPO/$BASH_SRC $HOME/.sources
 
@@ -32,6 +30,8 @@ function script_init() {
 
 function generate_config() {
   echo -e "\nGenerating sources from $SCRIPTS"
+  echo "alias dotfiles='cd $DIR'" >> $SCRIPTS/aliases
+  echo "alias srcbash='. $DIR/install'" >> $SCRIPTS/aliases
   for f in $SCRIPTS/*
   do
     echo $f
@@ -74,5 +74,5 @@ echo '------ Symlinking... ------'
 link_bash
 echo '------ Done ------'
 
-source $BASH_DIR/bash_profile
+# source $BASH_DIR/bash_profile
 source $HOME/.sources

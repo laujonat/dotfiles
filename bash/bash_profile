@@ -3,6 +3,7 @@
 # Set environment variables and startup programs here.
 
 echo "$(bash --version | head -2)"
+echo "akljdlkajdlk $DIR"
 shopt -q login_shell && echo -e "\nSourced .bash_profile" || echo -e "\nSourced .profile"
 
 if [[ -n $SSH_CONNECTION ]]; then
