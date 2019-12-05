@@ -30,8 +30,8 @@ function script_init() {
 
 function generate_config() {
   echo -e "\nGenerating sources from $SCRIPTS"
-  echo "alias dotfiles='cd $DIR'" >> $SCRIPTS/aliases
-  echo "alias srcbash='. $DIR/install'" >> $SCRIPTS/aliases
+  echo "alias dotfiles='cd $DIR'" >> $REPO/$BASH_SRC
+  echo "alias srcbash='. $DIR/install'" >> $REPO/$BASH_SRC
   for f in $SCRIPTS/*
   do
     echo $f
