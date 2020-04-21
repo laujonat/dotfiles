@@ -6,7 +6,7 @@ alias vim=nvim
 fi
 
 dir="$(pwd)"
-alias als="vim $dir/aliases"
+alias als="vim $(dir)/.aliases"
 alias afind='ack -il'
 alias history='fc -l 1'
 alias l='ls -lah'
@@ -20,6 +20,7 @@ alias pu='pushd'
 alias rd='rmdir'
 alias cp='cp -i'
 alias mv='mv -i'
+alias algs='cd ~/Programs/algoRepl'
 
 # Search
 alias grep='grep $grep_opts'

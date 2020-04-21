@@ -1,7 +1,7 @@
 .DS_STORE
 
 history/*
-          ./bash_*
+/bash_*
 
-          /sandbox
-          scripts/.fzf*
+/sandbox
+scripts/.fzf*

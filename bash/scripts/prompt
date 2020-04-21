@@ -53,4 +53,11 @@
 
 export CLICOLOR=1
 export LS_COLORS='di=36:fi=0:ln=94:pi=0:so=5:bd=0:cd=0:or=91:mi=31:ex=92:*.rpm=90'
-export PS1="[${blu}\u${red}@${grn}\\h:${nc}\W]${light_cyn}$(parse_git_branch)${nc} "
+export PS1="[${blu}\u${red}@${grn}\\h:${nc}\W]${light_cyn}$(git_current_branch)${nc} "
+update_PS1 () {
+  PS1="[${blu}\u${red}@${grn}\\h:${nc}\W]${light_cyn}$(git_current_branch)${nc} "
+}
+
+shopt -u promptvars
+PROMPT_COMMAND=update_PS1
+
