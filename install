@@ -5,10 +5,11 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 echo "Repository is located at $DIR"
 cd $DIR
 export REPO="`git rev-parse --show-toplevel`"
+export BASH_DIR=$REPO/bash
+export SCRIPTS=$BASH_DIR/scripts
 
 function init() {
-  BASH_DIR=$REPO/bash
-  SCRIPTS=$BASH_DIR/scripts
+  echo $SCRIPTS
   BASH_SRC=bash_"$(date +%s)"
   touch -f $BASH_SRC
 

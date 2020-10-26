@@ -3,7 +3,6 @@
 # Set environment variables and startup programs here.
 
 echo "$(bash --version | head -2)"
-echo "akljdlkajdlk $DIR"
 shopt -q login_shell && echo -e "\nSourced .bash_profile" || echo -e "\nSourced .profile"
 
 if [[ -n $SSH_CONNECTION ]]; then
@@ -13,3 +12,7 @@ else
 fi
 
 [[ -f "$HOME/.bashrc" ]] && source "$HOME/.bashrc"
+export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+export MANPATH="/home/linuxbrew/.linuxbrew/share/man:$MANPATH"
+export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"
+export PATH="$PATH:/opt/yarn-[version]/bin"
