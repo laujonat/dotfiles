@@ -16,3 +16,15 @@ export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
 export MANPATH="/home/linuxbrew/.linuxbrew/share/man:$MANPATH"
 export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"
 export PATH="$PATH:/opt/yarn-[version]/bin"
+
+export ZEPHYR_TOOLCHAIN_VARIANT="gnuarmemb"
+export GNUARMEMB_TOOLCHAIN_PATH="/home/laujonat/hakkei/zmk-config/config"
+
+# Added by serverless binary installer
+export PATH="$HOME/.serverless/bin:$PATH"
+SSHAGENT=/usr/bin/ssh-agent
+SSHAGENTARGS="-s"
+if [ -z "$SSH_AUTH_SOCK" -a -x "$SSHAGENT"  ]; then
+  eval `$SSHAGENT $SSHAGENTARGS`
+  trap "kill $SSH_AGENT_PID" 0
+fi
