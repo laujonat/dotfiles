@@ -5,3 +5,4 @@ history/*
 
 /sandbox
 scripts/.fzf*
+bash/scripts/.nvimlog
