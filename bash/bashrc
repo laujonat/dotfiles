@@ -33,9 +33,9 @@ fi
 export LESSOPEN="|/usr/local/bin/lesspipe.sh %s" LESS_ADVANCED_PREPROCESSOR=1
 # [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
+
 export PATH="$PATH:/usr/local/bin/"
 export PATH="$PATH:$HOME/.npm-packages/bin"
-
 [ -f ~/.go ] && source ~/.go
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 export PATH=/home/laujonat/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
@@ -44,3 +44,15 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 #export DOCKER_HOST=tcp://localhost:2375
+
+# tabtab source for packages
+# uninstall by removing these lines
+[ -f ~/.config/tabtab/__tabtab.bash ] && . ~/.config/tabtab/__tabtab.bash || true
+export ZEPHYR_TOOLCHAIN_VARIANT=zephyr
+export ZEPHYR_SDK_INSTALL_DIR=/home/laujonat/.local/zephyr-sdk-0.11.2
+
+
+export GOROOT=/usr/local/go
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+PATH=$PATH:$GOPATH/bin # Add GOPATH/bin to PATH for scripting

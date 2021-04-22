@@ -14,5 +14,10 @@ ssh-add -l 2>/dev/null >/dev/null
 if [ -d "$HOME/bin" ] ; then
   PATH="$PATH:$HOME/bin"
 fi
+
 PATH="$HOME/.npm-global/bin:$PATH"
-PATH="$HOME/.npm-global/bin:$PATH"
+
+
+GOPATH="$HOME/.go"
+export GOPATH
+PATH=$PATH:$GOPATH/bin # Add GOPATH/bin to PATH for scripting
