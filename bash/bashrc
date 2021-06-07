@@ -38,7 +38,7 @@ export PATH="$PATH:/usr/local/bin/"
 export PATH="$PATH:$HOME/.npm-packages/bin"
 [ -f ~/.go ] && source ~/.go
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
-export PATH=/home/laujonat/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+export PATH=/home/tlcie/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -49,10 +49,17 @@ export NVM_DIR="$HOME/.nvm"
 # uninstall by removing these lines
 [ -f ~/.config/tabtab/__tabtab.bash ] && . ~/.config/tabtab/__tabtab.bash || true
 export ZEPHYR_TOOLCHAIN_VARIANT=zephyr
-export ZEPHYR_SDK_INSTALL_DIR=/home/laujonat/.local/zephyr-sdk-0.11.2
-
+export ZEPHYR_SDK_INSTALL_DIR=/home/tlcie/.local/zephyr-sdk-0.11.2
 
 export GOROOT=/usr/local/go
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 PATH=$PATH:$GOPATH/bin # Add GOPATH/bin to PATH for scripting
+
+# The next line updates PATH for the Google Cloud SDK.
+# if [ -f '/home/tlcie/google-cloud-sdk/path.bash.inc' ]; then . '/home/tlcie/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+# if [ -f '/home/tlcie/google-cloud-sdk/completion.bash.inc' ]; then . '/home/tlcie/google-cloud-sdk/completion.bash.inc'; fi
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
