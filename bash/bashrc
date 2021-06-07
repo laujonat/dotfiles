@@ -51,8 +51,13 @@ export NVM_DIR="$HOME/.nvm"
 export ZEPHYR_TOOLCHAIN_VARIANT=zephyr
 export ZEPHYR_SDK_INSTALL_DIR=/home/laujonat/.local/zephyr-sdk-0.11.2
 
-
 export GOROOT=/usr/local/go
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 PATH=$PATH:$GOPATH/bin # Add GOPATH/bin to PATH for scripting
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/laujonat/google-cloud-sdk/path.bash.inc' ]; then . '/home/laujonat/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/laujonat/google-cloud-sdk/completion.bash.inc' ]; then . '/home/laujonat/google-cloud-sdk/completion.bash.inc'; fi
