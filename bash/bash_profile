@@ -18,7 +18,7 @@ export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"
 export PATH="$PATH:/opt/yarn-[version]/bin"
 
 # export ZEPHYR_TOOLCHAIN_VARIANT="gnuarmemb"
-export GNUARMEMB_TOOLCHAIN_PATH="/home/laujonat/gcc-arm-none-eabi-10-2020-q4-major"
+export GNUARMEMB_TOOLCHAIN_PATH="/home/tlcie/gcc-arm-none-eabi-10-2020-q4-major"
 
 # Added by serverless binary installer
 export PATH="$HOME/.serverless/bin:$PATH"
