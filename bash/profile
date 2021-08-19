@@ -23,3 +23,8 @@ export GOPATH
 PATH=$PATH:$GOPATH/bin # Add GOPATH/bin to PATH for scripting
 
 PATH="$PATH:/mnt/c/Users/telne/AppData/Local/Programs/Microsoft VS Code"
+
+if [ -d "$HOME/.local/bin" ] ; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
+

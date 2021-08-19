@@ -28,3 +28,7 @@ if [ -z "$SSH_AUTH_SOCK" -a -x "$SSHAGENT"  ]; then
   eval `$SSHAGENT $SSHAGENTARGS`
   trap "kill $SSH_AGENT_PID" 0
 fi
+if [ -e /home/tlcie/.nix-profile/etc/profile.d/nix.sh ]; then . /home/tlcie/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+
+
+export PATH=$PATH:"/mnt/c/Users/telne/AppData/Local/Programs/Microsoft VS Code/bin"
