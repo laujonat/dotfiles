@@ -18,9 +18,9 @@ fi
 PATH="$HOME/.npm-global/bin:$PATH"
 
 
-GOPATH="$HOME/.go"
-export GOPATH
-PATH=$PATH:$GOPATH/bin # Add GOPATH/bin to PATH for scripting
+# GOPATH="$HOME/.go"
+# export GOPATH
+# PATH=$PATH:$GOPATH/bin # Add GOPATH/bin to PATH for scripting
 
 PATH="$PATH:/mnt/c/Users/telne/AppData/Local/Programs/Microsoft VS Code"
 

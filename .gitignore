@@ -6,3 +6,9 @@ history/*
 /sandbox
 scripts/.fzf*
 bash/scripts/.nvimlog
+
+backup/
+plugged/
+undodir/
+fonts/
+.netrwhist
