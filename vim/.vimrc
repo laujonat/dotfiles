@@ -1,244 +1,237 @@
-" Basic
-" set shell=/bin/zsh
-set belloff=all " Annoying bell off
 set encoding=utf-8
-set nocompatible " Set no compatible with vi
-set noswapfile
 
-set hidden
-set ruler
-set laststatus=2
-set number
-set nocursorline
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved
+
+set signcolumn=yes
+
+" Performance Config
+"
+set tabstop=4
+" Reference https://github.com/amix/vimrc/blob/master/vimrcs/basic.vim
+" Don't redraw while executing macros (good performance config)
 set lazyredraw
-set title "Show the filename in the window title bar
-set nostartofline "Make j/k respect the columns
 
-set autoindent
-set autoread
-set backspace=indent,eol,start
-set display+=lastline
-set foldmethod=syntax
-set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
-set nofoldenable
-set completeopt-=preview "Disable the preview window for completions.
-set expandtab
-set smarttab
-set splitbelow splitright "Pane splitting
-set noshowmode "The status line will show the mode.
-set nowrap
-set nrformats-=octal
-set scrolloff=1
-set sidescrolloff=5
+" For regular expressions turn magic on
+set magic
 
-set re=1 "Force the old regex engine on any version newer
+" Show matching brackets when text indicator is over them
+set showmatch
+
+" How many tenths of a second to blink when matching brackets
+set mat=2
+
+" Show line numbers 
+set number
+
+" This will allow you to use your mouse for some operations, but it's still quite limited compared to VSCode.
+set mouse=a
+
+" Key Mapping
+let mapleader = ","
+
+" Maps jk to Esc
+imap jk <Esc>
+
+
+
+" :W sudo saves the file
+" (useful for handling the permission-denied error)
+command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
+
+noremap <C-s> <esc>:w<cr>                 " Save files in insert mode by pressing Ctrl + s
+nnoremap <C-s> :w<cr>                      " Save files in normal mode by pressing Ctrl + s
+inoremap <C-d> <esc>:wq!<cr>               " Save and exit in insert mode by pressing Ctrl + d
+nnoremap <C-d> :wq!<cr>                    " Save and exit in normal mode by pressing Ctrl + d
+inoremap <C-q> <esc>:qa!<cr>               " Quit all without saving in insert mode by pressing Ctrl + q
+nnoremap <C-q> :qa!<cr>                    " Quit all without saving in normal mode by pressing Ctrl + q
+inoremap <C-x> <esc>:q!<cr>                " Quit current file without saving in insert mode by pressing Ctrl + x
+nnoremap <C-x> :q!<cr>                     " Quit current file without saving in normal mode by pressing Ctrl + x
+
+" Configure backspace so it acts as it should act
+set backspace=eol,start,indent
+set whichwrap+=<,>,h,l
+
+" Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
+map <space> /
+map <C-space> ?
+
+" Disable highlight when <leader><cr> is pressed
+map <silent> <leader><cr> :noh<cr>
+
+" Turn on the Wild menu
 set wildmenu
-set wildmode=longest:full "<TAB> displayes longest match first
 
-set shiftwidth=2
-set softtabstop=2
-set tabstop=2
+" Ignore compiled files
+set wildignore=*.o,*~,*.pyc
+if has("win16") || has("win32")
+    set wildignore+=.git\*,.hg\*,.svn\*
+else
+    set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
+endif
 
-set incsearch
+" No annoying sound on errors
+set noerrorbells
+set novisualbell
+set t_vb=
+set tm=500
+
+" Ignore case when searching
 set ignorecase
+
+" When searching try to be smart about cases
 set smartcase
 
-let &t_SI.="\e[5 q" "SI = INSERT mode
-let &t_EI.="\e[1 q"
+" Highlight search results
+set hlsearch
 
-"Read/Write mappings
-inoremap <C-s> <esc>:w<cr>
-nnoremap <C-s> :w<cr>
-inoremap <C-d> <esc>:wq!<cr>
-nnoremap <C-d> :wq!<cr>
-inoremap <C-q> <esc>:qa!<cr>
-nnoremap <C-q> :qa!<cr>
+" Makes search act like search in modern browsers
+set incsearch
 
-" Pressing Ctrl-u deletes text you've typed in the current line
-" Ctrl-w deletes the word before the cursor, both undoable.
-" This adds Ctrl-g first to start a new change
-inoremap <C-U> <C-G>u<C-U>
-inoremap <C-U> <C-G>u<C-U>
-inoremap <C-W> <C-G>u<C-W>
 
-" Clipboard Settings
-noremap <Leader>y "*y
-noremap <Leader>p "*p
+" Sets how many lines of history VIM has to remember
+set history=1000
 
-" Uunset highlighting on matches
-nnoremap <silent> <CR> :nohlsearch<CR><CR>
+" Set to auto read when a file is changed from the outside
+set autoread
+au FocusGained,BufEnter * silent! checktime
 
-" Exit terminal mode
-tnoremap <Esc> <C-\><C-n>
+nnoremap <Leader>w :w<CR>
 
-" Map buffer list
-nnoremap <Leader>b :ls<CR>:b<Space>
+" Enable filetype plugins
+filetype plugin on
+filetype indent on
 
-" fzf fuzzy search
-nmap <Leader>t :Files<CR>
-nmap <Leader>r :Tags<CR>
+" Editor
 
-" Autoreload external changes
-au FocusGained,BufEnter * :checktime
+" Add a bit extra margin to the left
+set foldcolumn=1
 
-" Session storage directories and viminfo
-set viminfo='100,f1,<50,s10,h,n~/.config/nvim/viminfo
-set backupdir=~/.config/nvim/.backup//
-set directory=~/.config/nvim/.swap//
+" Enable syntax highlighting
+syntax enable
 
-" Find snake_case - '+', '_' to convert
-:nnoremap + /\w\+_<CR>
-:nnoremap _ f_x~
+" Set regular expression engine automatically
+set regexpengine=0
 
-"Execute %!python -m json.tool to format json
-runtime! macros/matchit.vim
+" Enable 256 colors palette in Gnome Terminal
+if $COLORTERM == 'gnome-terminal'
+    set t_Co=256
+endif
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Plugins
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-call plug#begin('~/.vim/plugged')
-  "Basics
-  Plug 'roxma/vim-hug-neovim-rpc'
-  Plug 'tpope/vim-eunuch'
-  Plug 'junegunn/vim-easy-align'
-" (Optional) Multi-entry selection UI.
-  Plug 'junegunn/fzf'
-  Plug 'Chiel92/vim-autoformat' " vim autoformat
-  Plug 'w0rp/ale'
-  Plug 'tell-k/vim-autopep8'
-  Plug 'jiangmiao/auto-pairs'
-  Plug 'tpope/vim-surround' " selection surroundings
-  Plug 'scrooloose/nerdcommenter' " code commenting
-  "Visuals
-  Plug 'flazz/vim-colorschemes'
-  Plug 'ap/vim-css-color' " CSS Vim color preview
-  "Language-Specific (alphabetical by package-identifier
-  Plug 'chr4/nginx.vim' " nginx configs
-  Plug 'mxw/vim-jsx' " JSX highlighter (depends on underlying JS highlighter
-  Plug 'HerringtonDarkholme/yats.vim'
-  Plug 'mhartington/nvim-typescript', {'do': ':!install.sh \| UpdateRemotePlugins'}
 
-  "FZF Fuzzy Search
-  Plug 'junegunn/fzf', { 'build': './install --all', 'merged': 0 }
-  Plug 'junegunn/fzf.vim', { 'depends': 'fzf' }
+
+" Set extra options when running in GUI mode
+if has("gui_running")
+    set guioptions-=T
+    set guioptions-=e
+    set t_Co=256
+    set guitablabel=%M\ %t
+endif
+
+" Set utf8 as standard encoding and en_US as the standard language
+set encoding=utf8
+
+" Use Unix as the standard file type
+set ffs=unix,dos,mac
+
+
+
+call plug#begin()
+	 
+	Plug 'tyru/open-browser.vim' " opens url in browser
+	Plug 'http://github.com/tpope/vim-surround' " Surrounding ysw)
+	Plug 'https://github.com/ap/vim-css-color' " CSS Color Preview
+	Plug 'preservim/nerdtree'
+  Plug 'airblade/vim-gitgutter'
+	Plug 'prettier/vim-prettier', { 'do': 'yarn install --frozen-lockfile --production' }
+
+	Plug 'justinmk/vim-sneak' 
+	Plug 'https://github.com/tpope/vim-commentary' " For Commenting gcc & gc
+	Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
+
+	" Autocompletion
+	Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 call plug#end()
 
-nnoremap <F5> :call LanguageClient_contextMenu()<CR>
-" Or map each action separately
-" nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-" nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-" nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+set signcolumn=yes
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Color Scheme
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-filetype plugin indent on
-syntax enable
-" This line enables the true color support.
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-set termguicolors
-set background=dark
 
-let g:jellybeans_use_lowcolor_black = 1
-let g:jellybeans_overrides = {
-\    'Todo': { 'guifg': '303030', 'guibg': 'f0f000',
-\              'ctermfg': 'Black', 'ctermbg': 'Yellow',
-\              'attr': 'bold' },
-\    'Comment': { 'guifg': 'cccccc' },
-\}
+" Setup for plugins goes here
 
-let g:jellybeans_overrides = {
-\    'MatchParen': { 'guifg': 'dd0093', 'guibg': '000000',
-\                    'ctermfg': 'Magenta', 'ctermbg': '' },
-\}
-colorscheme jellybeans
+" Commenting
+" 
+" Map gc to a single key for toggling comment
+"
+" This will map the normal mode sequence ,c to the Commentary command provided
+" by the vim-commentary plugin. When you press ,c, the plugin will comment out
+" the current line or selection.
+nnoremap ,c :Commentary<CR>
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Autopair Completion
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:AutoPairsFlyMode = 0
-let g:AutoPairsShortcutBackInsert = '<M-b>'
-let g:AutoPairsShortcutJump = 0
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Lightline
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:lightline = {
-      \ 'colorscheme': 'powerline',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'readonly', 'absolutepath', 'modified' ] ],
-      \   'right': [ [ 'custom-lineinfo' ],
-      \              [ 'custom-fileinfo' ] ],
-      \ },
-      \ 'inactive': {
-      \   'left': [ [ 'readonly', 'filename', 'modified' ] ],
-      \   'right': [ [ 'custom-lineinfo' ],
-      \              [ 'custom-fileinfo' ] ],
-      \ },
-      \ 'component': {
-      \   'custom-lineinfo': ' %3p%% ┃ %4l/%L :%3c',
-      \ },
-      \ 'component_function': {
-      \   'custom-fileinfo': 'LightlineFileInfo',
-      \   'readonly': 'LightlineReadonly',
-      \ },
-      \ 'tabline': {
-      \   'left': [ [ 'tabs' ] ],
-      \   'right': [ ],
-      \ },
-\ }
+" Map 'gc' to toggle comments in normal and visual modes
+" nmap gc <Plug>Commentary
+" xmap gc <Plug>Commentary
+" omap gc <Plug>Commentary
 
-function! LightlineReadonly()
-  return &readonly ? '∄' : ''
-endfunction
-function! LightlineFileInfo()
-  let displayFiletype = &filetype !=# '' ? &filetype : 'no ft'
-  return ' ' . displayFiletype . ' ┃  ' . &fileencoding . '[' . &fileformat . '] '
+" Map 'gcc' to toggle comment on the current line in normal mode
+" nmap gcc <Plug>CommentaryLine
+
+
+
+" NERDTree configuration
+
+function! OpenNERDTreeIfFile()
+  " Check if the first argument is a directory
+  if argc() > 0 && isdirectory(argv(0))
+    " Do not open NERDTree when starting Vim with a directory
+    return
+  endif
+
+  " Open NERDTree if starting with a file or without any arguments
+  if argc() == 0 || filereadable(argv(0))
+    NERDTree
+    " If NERDTree is the only window, start editing an empty file
+    if winnr('$') == 1
+      enew
+    endif
+  endif
 endfunction
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Completions
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Call the function after Vim enters
+autocmd VimEnter * call OpenNERDTreeIfFile()
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Completions
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-"Autocomplete and cycle from top-to-bottom of suggestions using <Tab>.
-inoremap <expr><TAB> pumvisible() ? "\<c-n>" : "\<TAB>"
+nnoremap <leader>n :NERDTreeFocus<CR>
+nnoremap <C-n> :NERDTree<CR>
+nnoremap <C-t> :NERDTreeToggle<CR>
+nnoremap <C-f> :NERDTreeFind<CR>
 
-"<S-TAB>: completion back.
-inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<C-h>"
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Python Autopep 8 Formatting
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:autopep8_max_line_length=79
-let g:autopep8_ignore="E501,W293,C0321"
-let g:autopep8_disable_show_diff=0
-let g:autopep8_on_save=1 " Autosave on save
+" Keep NERDTree open when opening a file
+" autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Automatic Whitespace Trimming and Formatting (for select filetypes)
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:ale_typescript_tslint_ignore_empty_files = 0
-let g:ale_typescript_tsserver_config_path = ''
-let g:ale_typescript_tsserver_executable = 'tsserver'
-let g:ale_typescript_tsserver_use_global = 0
+" Start NERDTree and put the cursor back in the other window.
+autocmd VimEnter * NERDTree | wincmd p
 
-let g:jsx_ext_required = 0 "jsx highlighting
+" Airline setup
+let g:airline#extensions#tabline#enabled = 1
+" let g:coc_node_path = '$NVM_DIR/versions/node/v18.20.1/bin/node'
+let g:coc_node_path = substitute(system('which node'), '\n\+$', '', '')
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Ale Syntax & Language Specific
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:ale_sign_error = '✘'
-let g:ale_sign_warning = '⚠'
-let g:ale_fix_on_save = 1
-let g:ale_fixers = {
-\   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\   'javascript': ['prettier', 'eslint'],
-\   'typescript': ['prettier', 'tslint'],
-\}
-highlight ALEErrorSign ctermbg=NONE ctermfg=red
-highlight ALEWarningSign ctermbg=NONE ctermfg=yellow
+
+
+
+" coc.nvim setup
+" Use `:CocInstall <extension>` to install language servers and extensions
+" Run :CocInstall [coc-tsserver, coc-html, coc-css, coc-json, coc-emmet]
+noremap <silent><expr> <tab> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<TAB>"
+inoremap <silent><expr> <cr> "\<c-g>u\<CR>"
+" :CocConfig will open coc-settings.json for fine tuning
+
+
+packloadall
+" Colorscheme must be set last
+try
+    colorscheme catppuccin-mocha " catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
+catch
+endtry

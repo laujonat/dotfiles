@@ -1,0 +1,55 @@
+#!/bin/bash/
+# Define color variables
+ylw='\033[1;33m' # Yellow
+grn='\033[0;32m' # Green
+nc='\033[0m'     # No Color
+
+function ii() {
+  echo -e "\n${ylw}Logged on as: ${nc}$USER"
+  echo -e "${ylw}Hostname: ${nc}$HOSTNAME"
+  echo -e "\n${grn}Current date: ${nc}"; date
+  echo -e "\n${grn}System information: ${nc}"; sys_info
+  echo -e "\n${grn}Machine stats: ${nc}"; uptime
+  echo -e "\n${nc}"
+}
+
+IP4='\033[0;32m'
+IP6='\033[0;34m'
+IFACE='\033[0;33m'
+DEFAULT_ROUTE='\033[0;30m'
+IFCONFIG_CMD=$(which ifconfig)
+IP_CMD=$(which ip)
+
+function colored_ip() {
+  ${IP_CMD} $@ | sed \
+    -e "s/inet [^ ]\+ /${IP4}&${nc}/g"\
+    -e "s/inet6 [^ ]\+ /${IP6}&${nc}/g"\
+    -e "s/^default via .*$/${DEFAULT_ROUTE}&${nc}/"\
+    -e "s/^\([0-9]\+: \+\)\([^ \t]\+\)/\1${IFACE}\2${nc}/"
+  }
+
+function colored_ifconfig() {
+  ${IFCONFIG_CMD} $@ | sed \
+    -e "s/inet [^ ]\+ /${IP4}&${nc}/g"\
+    -e "s/inet6 [^ ]\+ /${IP6}&${nc}/g"\
+    -e "s/^default via .*$/${DEFAULT_ROUTE}&${nc}/"\
+    -e "s/^\([0-9]\+: \+\)\([^ \t]\+\)/\1${IFACE}\2${nc}/"
+  }
+
+function sys_info() {
+  os=`uname -s`
+  os_r=`uname -r`
+  os_v=`uname -v`
+  p_arch=`uname -p`
+
+  echo -e "${nc} ${os} ${os_r} ${os_v} ${p_arch}"
+}
+
+alias ip='colored_ip'
+alias ifconfig='colored_ifconfig'
+alias edit_hosts='edit /etc/hosts' # edit_hosts: Edit /etc/hosts file
+alias sshd-logs='tail -f /var/log/auth.log' # tail ssh auth log
+
+function find-pid() { lsof -t -c "$@" ; }
+
+function http-headers() { /usr/bin/curl -I -L $@ ; }

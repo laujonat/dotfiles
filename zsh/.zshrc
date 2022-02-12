@@ -1,46 +1,35 @@
+# Used on Intel Macs
 
-# Time the stuff.
-integer t0=$(date '+%s')
+# Autoload compinit and promptinit
+autoload -Uz compinit promptinit
 
-source $HOME/antigen.zsh
+# Use brew to install brew install antidote
+source $(brew --prefix)/opt/antidote/share/antidote/antidote.zsh
 
-# Load the oh-my-zsh's library.
-antigen use oh-my-zsh
+antidote load
 
-# Bundles from the default repo (robbyrussell's oh-my-zsh).
-antigen bundle git
-antigen bundle heroku
-antigen bundle pip
-antigen bundle docker
-antigen bundle kubernetes
-antigen bundle lein
-antigen bundle fzf
-antigen bundle gatsby
-antigen bundle httpie
-antigen bundle mosh
-antigen bundle npm
-antigen bundle copyfile
-antigen bundle copydir
-antigen bundle yarn
-antigen bundle alias-finder
-antigen bundle command-not-found
-antigen bundle zsh-users/zsh-autosuggestions
+bindkey -r '\C-s'
+stty -ixon
 
-# Syntax highlighting bundle.
-antigen bundle zsh-users/zsh-syntax-highlighting
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# Load the theme.
-antigen theme robbyrussell
+# Load private zsh configurations
+if [[ -f ~/.zsh_private ]]; then
+	source ~/.zsh_private
+fi
 
-# Tell Antigen that you're done.
-antigen apply
+# Update PATH
+export PATH="/usr/local/opt/binutils/bin:/usr/local/sbin:/usr/local/bin:$HOME/Library/pnpm:$PATH"
 
+export TERM=xterm
 
-function {
-    local -i t1 startup
-    t1=$(date '+%s')
-    startup=$(( t1 - t0 ))
-    [[ $startup -gt 1 ]] && print "Hmm, poor shell startup time: $startup"
-    ##print "startup time: $startup"
-}
-unset t0
+bindkey '^[[A' autosuggest-accept
+bindkey '^[[B' autosuggest-accept
+
+. "$HOME/.asdf/asdf.sh"
+
+# append completions to fpath
+fpath=(${ASDF_DIR}/completions $fpath)
+
+# initialise completions with ZSH's compinit
+compinit
