@@ -3,38 +3,16 @@
 integer t0=$(date '+%s')
 
 source $HOME/antigen.zsh
+autoload -U promptinit; promptinit
+# prompt pure
+prompt purity
 
-# Load the oh-my-zsh's library.
-antigen use oh-my-zsh
 
-# Bundles from the default repo (robbyrussell's oh-my-zsh).
-antigen bundle git
-antigen bundle heroku
-antigen bundle pip
-antigen bundle docker
-antigen bundle kubernetes
-antigen bundle lein
-antigen bundle fzf
-antigen bundle gatsby
-antigen bundle httpie
-antigen bundle mosh
-antigen bundle npm
-antigen bundle copyfile
-antigen bundle copydir
-antigen bundle yarn
-antigen bundle alias-finder
-antigen bundle command-not-found
-antigen bundle zsh-users/zsh-autosuggestions
-
-# Syntax highlighting bundle.
-antigen bundle zsh-users/zsh-syntax-highlighting
-
-# Load the theme.
-antigen theme robbyrussell
+# Load Antigen configurations
+antigen init ~/.antigenrc
 
 # Tell Antigen that you're done.
 antigen apply
-
 
 function {
     local -i t1 startup
@@ -44,3 +22,20 @@ function {
     ##print "startup time: $startup"
 }
 unset t0
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export PATH="/usr/local/opt/binutils/bin:$PATH"
+
+# pnpm
+export PNPM_HOME="/Users/jon/Library/pnpm"
+export PATH="$PNPM_HOME:$PATH"
+# pnpm end
+# Created by `pipx` on 2022-07-02 11:27:20
+export PATH="$PATH:/Users/jon/.local/bin"
+
+# bit
+export PATH="$PATH:/Users/jon/bin"
+# bit end
+export PATH=/Users/jon/.meteor:$PATH
+
+ZSH_THEME=""
