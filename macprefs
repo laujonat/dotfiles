@@ -1,0 +1,31 @@
+
+// Remove login desktop picture for quicker startup
+defaults write /Library/Preferences/com.apple.loginwindow DesktopPicture ""
+
+// Enable text selection in quick view window
+defaults write com.apple.finder QLEnableTextSelection -bool true && killall Finder
+
+// you can adjust the animation speeds by changing the number after the -float flag。
+defaults write com.apple.dock expose-animation-duration -float 0.15 && killall Dock
+
+
+// "Differentiate Without Color" accessibility setting. This setting changes the user interface to not rely on color to convey information, which can reduce the complexity of the display and potentially improve performance.
+defaults write com.apple.Accessibility DifferentiateWithoutColor -int 1
+
+// "Reduce Motion" accessibility setting. This setting reduces the use of animation and certain visual effects in macOS. This can help improve performance by reducing the demand on your Mac's graphics processing.
+defaults write com.apple.Accessibility ReduceMotionEnabled -int 1
+
+// Same thing as the previous command, but for a different system setting. It's a bit redundant, but it doesn't hurt to include it.
+defaults write com.apple.universalaccess reduceMotion -int 1
+
+// "Reduce Transparency" accessibility setting. This setting reduces the use of transparency and blur effects throughout macOS, which can also help improve performance by reducing the demand on your Mac's graphics processing.
+defaults write com.apple.universalaccess reduceTransparency -int 1
+
+// Remove the auto-hide Dock delay
+defaults write com.apple.dock autohide-delay -float 0
+
+// Apply the changes immediately
+killall Dock
+
+// Show hidden files in finder
+defaults write com.apple.Finder AppleShowAllFiles true

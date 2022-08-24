@@ -1,5 +1,13 @@
 # Load oh-my-zsh library
+source $HOME/antigen.zsh
+
 antigen use oh-my-zsh
+
+if [[ $OSTYPE == darwin* ]]; then
+  antigen bundle macos
+fi
+
+antigen bundle therealklanni/purity
 
 # Load bundles from the default repo (oh-my-zsh)
 antigen bundle git
@@ -13,7 +21,6 @@ antigen bundle docker
 antigen bundle kubernetes
 antigen bundle lein
 antigen bundle fzf
-antigen bundle gatsby
 antigen bundle httpie
 antigen bundle mosh
 antigen bundle npm
@@ -32,7 +39,7 @@ antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-syntax-highlighting
 
 # Select theme
-antigen theme denysdovhan/spaceship-prompt
+# antigen theme denysdovhan/spaceship-prompt
 
 # Tell Antigen that you're done
 antigen apply

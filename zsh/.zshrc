@@ -1,41 +1,35 @@
+# Used on Intel Macs
 
-# Time the stuff.
-integer t0=$(date '+%s')
+# Autoload compinit and promptinit
+autoload -Uz compinit promptinit
 
-source $HOME/antigen.zsh
-autoload -U promptinit; promptinit
-# prompt pure
-prompt purity
+# Use brew to install brew install antidote
+source $(brew --prefix)/opt/antidote/share/antidote/antidote.zsh
 
+antidote load
 
-# Load Antigen configurations
-antigen init ~/.antigenrc
-
-# Tell Antigen that you're done.
-antigen apply
-
-function {
-    local -i t1 startup
-    t1=$(date '+%s')
-    startup=$(( t1 - t0 ))
-    [[ $startup -gt 1 ]] && print "Hmm, poor shell startup time: $startup"
-    ##print "startup time: $startup"
-}
-unset t0
+bindkey -r '\C-s'
+stty -ixon
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export PATH="/usr/local/opt/binutils/bin:$PATH"
 
-# pnpm
-export PNPM_HOME="/Users/jon/Library/pnpm"
-export PATH="$PNPM_HOME:$PATH"
-# pnpm end
-# Created by `pipx` on 2022-07-02 11:27:20
-export PATH="$PATH:/Users/jon/.local/bin"
+# Load private zsh configurations
+if [[ -f ~/.zsh_private ]]; then
+	source ~/.zsh_private
+fi
 
-# bit
-export PATH="$PATH:/Users/jon/bin"
-# bit end
-export PATH=/Users/jon/.meteor:$PATH
+# Update PATH
+export PATH="/usr/local/opt/binutils/bin:/usr/local/sbin:/usr/local/bin:$HOME/Library/pnpm:$PATH"
 
-ZSH_THEME=""
+export TERM=xterm
+
+bindkey '^[[A' autosuggest-accept
+bindkey '^[[B' autosuggest-accept
+
+. "$HOME/.asdf/asdf.sh"
+
+# append completions to fpath
+fpath=(${ASDF_DIR}/completions $fpath)
+
+# initialise completions with ZSH's compinit
+compinit
