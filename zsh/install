@@ -1,8 +1,35 @@
 #!/bin/bash
 
-curl -L git.io/antigen > antigen.zsh
+# Switch to zsh
 
-git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-~/.fzf/install
+export REPO="$(git rev-parse --show-toplevel)"
+
+if [ -n "`$SHELL -c 'echo $ZSH_VERSION'`" ]; then
+	# assume Zsh
+	echo "zsh detected"
+elif [ -n "`$SHELL -c 'echo $BASH_VERSION'`" ]; then
+	# assume Bash
+   	sudo chsh -s $(which zsh) $(whoami)
+else
+  	echo "Something's not right..."
+	exit 0
+
+fi
+
+
+function init() {
+	sudo apt-get install zsh
+	sudo apt-get install zsh-autosuggestions zsh-syntax-highlighting
+	curl -L git.io/antigen > ~/antigen.zsh
+
+	cp $REPO/zsh/.zshrc $REPO/zsh/.zprofile $REPO/zsh/.zshenv $REPO/zsh/.antigenrc \
+		$REPO/zsh/.antigenrc $HOME/
+
+	git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+	~/.fzf/install
+}
+
+init
+
 
 
