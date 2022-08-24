@@ -4,4 +4,7 @@ export CONFIG="$HOME/conf"
 
 # Created by `pipx` on 2022-07-02 11:27:20
 export PATH="$PATH:/Users/jon/.local/bin"
-eval $(/opt/homebrew/bin/brew shellenv)
+
+if [[ $OSTYPE == 'darwin'* ]]; then
+   # eval $(/opt/homebrew/bin/brew shellenv)
+fi
