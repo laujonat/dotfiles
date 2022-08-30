@@ -16,14 +16,14 @@ else
 
 fi
 
-
 function init() {
 	sudo apt-get install zsh
 	sudo apt-get install zsh-autosuggestions zsh-syntax-highlighting
-	curl -L git.io/antigen > ~/antigen.zsh
 
-	cp $REPO/zsh/.zshrc $REPO/zsh/.zprofile $REPO/zsh/.zshenv $REPO/zsh/.antigenrc \
-		$REPO/zsh/.antigenrc $HOME/
+	mkdir $HOME/antigen
+	curl -L git.io/antigen > $HOME/antigen/antigen.zsh
+
+	cp $REPO/zsh/.zshrc $REPO/zsh/.zprofile $REPO/zsh/.zshenv $REPO/zsh/.antigenrc $HOME/
 
 	git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 	~/.fzf/install

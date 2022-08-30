@@ -2,12 +2,12 @@
 # Time the stuff.
 integer t0=$(date '+%s')
 
-source $HOME/antigen.zsh
+source ${HOME}/antigen/antigen.zsh
+
 
 autoload -U promptinit; promptinit
 # Load Antigen configurations
 antigen init ~/.antigenrc
-# prompt pure
 # prompt purity
 
 
