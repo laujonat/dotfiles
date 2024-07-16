@@ -31,5 +31,8 @@ function init() {
 
 init
 
+# ln -s ~/.dotfiles/zsh/antidote/.zsh_plugins.txt ~/.zsh_plugins.txt
+
+
 
 
