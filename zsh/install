@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # Switch to zsh
 
 export REPO="$(git rev-parse --show-toplevel)"
@@ -9,30 +7,51 @@ if [ -n "`$SHELL -c 'echo $ZSH_VERSION'`" ]; then
 	echo "zsh detected"
 elif [ -n "`$SHELL -c 'echo $BASH_VERSION'`" ]; then
 	# assume Bash
-   	sudo chsh -s $(which zsh) $(whoami)
+   	chsh -s $(which zsh)
 else
   	echo "Something's not right..."
 	exit 0
-
 fi
 
 function init() {
-	sudo apt-get install zsh
-	sudo apt-get install zsh-autosuggestions zsh-syntax-highlighting
+	# Check if Homebrew is installed, install if we don't have it
+	if test ! $(which brew); then
+		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+	fi
 
-	mkdir $HOME/antigen
-	curl -L git.io/antigen > $HOME/antigen/antigen.zsh
+	# Install zsh and zsh related tools
+	brew install zsh zsh-autosuggestions zsh-syntax-highlighting
 
-	cp $REPO/zsh/.zshrc $REPO/zsh/.zprofile $REPO/zsh/.zshenv $REPO/zsh/.antigenrc $HOME/
+	# Check if Antidote is installed, install if we don't have it
+	if ! brew ls --versions antidote > /dev/null; then
+		brew install antidote
+	fi
 
+	# Copy zsh configurations to home directory
+	cp $REPO/zsh/.zshrc $REPO/zsh/.zprofile $REPO/zsh/.zshenv $HOME/
+
+	# If .zsh_private does not exist, create it
+	if [ ! -f $HOME/.zsh_private ]; then
+		touch $HOME/.zsh_private
+	fi
+
+	# Copy .zsh_plugins.txt to home directory
+	cp $REPO/zsh/antidote/.zsh_plugins.txt $HOME/
+
+	# Create a symbolic link to .zsh_plugins.txt in the home directory
+	ln -s $HOME/.zsh_plugins.txt $HOME/.zsh_plugins.txt
+
+	# If .zsh_plugins.txt does not exist, create it
+	if [ ! -f $HOME/.zsh_plugins.txt ]; then
+		touch $HOME/.zsh_plugins.txt
+	fi
+
+	# Update PATH
+	echo 'export PATH="/usr/local/opt/binutils/bin:/usr/local/sbin:/usr/local/bin:'$HOME'/Library/pnpm:$PATH"' >> $HOME/.zshrc
+
+	# Install fzf
 	git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 	~/.fzf/install
 }
 
 init
-
-# ln -s ~/.dotfiles/zsh/antidote/.zsh_plugins.txt ~/.zsh_plugins.txt
-
-
-
-

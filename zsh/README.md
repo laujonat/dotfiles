@@ -1,16 +1,15 @@
-`$ chmod +x install`
-`$ ./install`
+# Install
 
-# Modify pam.d file to change shell if coming from bash
-$ sudo vim /etc/pam.d/chsh
+* `$ chmod +x install`
+* `$ ./install`
 
-Replace 
-```
-auth       required   pam_shells.so
-```
+## Execution Order
 
-with 
-
-```
-auth       sufficient   pam_shells.so
-```
+* /etc/zshenv
+* ~/.zshenv
+* /etc/zprofile (if this is a login shell)
+* ~/.zprofile (if this is a login shell)
+* /etc/zshrc (if this is an interactive shell)
+* ~/.zshrc (if this is an interactive shell)
+* /etc/zlogin (if this is a login shell)
+* ~/.zlogin (if this is a login shell)

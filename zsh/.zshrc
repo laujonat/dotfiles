@@ -1,29 +1,35 @@
+# Used on Intel Macs
 
-# Time the stuff.
-integer t0=$(date '+%s')
+# Autoload compinit and promptinit
+autoload -Uz compinit promptinit
 
-source $HOME/antigen.zsh
+# Use brew to install brew install antidote
+source $(brew --prefix)/opt/antidote/share/antidote/antidote.zsh
 
-autoload -U promptinit; promptinit
-# Load Antigen configurations
-antigen init ~/.antigenrc
-# prompt pure
-# prompt purity
+antidote load
 
-
-function {
-    local -i t1 startup
-    t1=$(date '+%s')
-    startup=$(( t1 - t0 ))
-    [[ $startup -gt 1 ]] && print "Hmm, poor shell startup time: $startup"
-    #print "startup time: $startup"
-}
-unset t0
+bindkey -r '\C-s'
+stty -ixon
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export OPENAI_API_KEY='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'
-export PATH="/usr/local/opt/binutils/bin:$PATH"
-export PATH=/Users/jon/.meteor:$PATH
-# export PATH="/usr/local/opt/openssl@3/bin:$PATH"
-export VOLTA_HOME="$HOME/.volta"
-export PATH="$VOLTA_HOME/bin:$PATH"
+
+# Load private zsh configurations
+if [[ -f ~/.zsh_private ]]; then
+	source ~/.zsh_private
+fi
+
+# Update PATH
+export PATH="/usr/local/opt/binutils/bin:/usr/local/sbin:/usr/local/bin:$HOME/Library/pnpm:$PATH"
+
+export TERM=xterm
+
+bindkey '^[[A' autosuggest-accept
+bindkey '^[[B' autosuggest-accept
+
+. "$HOME/.asdf/asdf.sh"
+
+# append completions to fpath
+fpath=(${ASDF_DIR}/completions $fpath)
+
+# initialise completions with ZSH's compinit
+compinit
