@@ -26,3 +26,6 @@ defaults write com.apple.dock autohide-delay -float 0
 
 // Apply the changes immediately
 killall Dock
+
+// Show hidden files in finder
+defaults write com.apple.Finder AppleShowAllFiles true
