@@ -14,43 +14,62 @@ else
 fi
 
 function init() {
-	# Check if Homebrew is installed, install if we don't have it
-	if test ! $(which brew); then
-		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-	fi
+    # Backup existing .zsh* files
+    for file in $HOME/.zsh*; do
+        if [ -e "$file" ]; then
+            echo "Backing up existing file: $file"
+            mv "$file" "$file.bak"
+        fi
+    done
 
-	# Install zsh and zsh related tools
-	brew install zsh zsh-autosuggestions zsh-syntax-highlighting
+    # Check if Homebrew is installed, install if we don't have it
+    if test ! $(which brew); then
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    fi
 
-	# Check if Antidote is installed, install if we don't have it
-	if ! brew ls --versions antidote > /dev/null; then
-		brew install antidote
-	fi
+    # Install zsh and zsh related tools
+    brew install zsh zsh-autosuggestions zsh-syntax-highlighting
 
-	# Create symbolic links for zsh configurations to home directory
-	ln -sf $REPO/zsh/.zshrc $HOME/.zshrc
-	ln -sf $REPO/zsh/.zprofile $HOME/.zprofile
-	ln -sf $REPO/zsh/.zshenv $HOME/.zshenv
+    # Check if Antidote is installed, install if we don't have it
+    if ! brew ls --versions antidote > /dev/null; then
+        brew install antidote
+    fi
 
-	# If .zsh_private does not exist, create it
-	if [ ! -f $HOME/.zsh_private ]; then
-		touch $HOME/.zsh_private
-	fi
+    # Create symbolic links for zsh configurations to home directory
+    ln -sf $REPO/zsh/.zshrc $HOME/.zshrc
+    ln -sf $REPO/zsh/.zprofile $HOME/.zprofile
+    ln -sf $REPO/zsh/.zshenv $HOME/.zshenv
 
-	# Create a symbolic link for .zsh_plugins.txt to home directory
-	ln -sf $REPO/zsh/antidote/.zsh_plugins.txt $HOME/.zsh_plugins.txt
+    # Concatenate all alias files and create a symbolic link with a timestamp
+    TIMESTAMP=$(date +%Y%m%d%H%M%S)
+    cat $REPO/aliases/* > $REPO/aliases/.aliases_$TIMESTAMP
+    ln -sf $REPO/aliases/.aliases_$TIMESTAMP $HOME/.aliases_$TIMESTAMP
 
-	# If .zsh_plugins.txt does not exist, create it
-	if [ ! -f $HOME/.zsh_plugins.txt ]; then
-		touch $HOME/.zsh_plugins.txt
-	fi
+    # If .zsh_private does not exist, create it
+    if [ ! -f $HOME/.zsh_private ]; then
+        touch $HOME/.zsh_private
+    fi
 
-	# Update PATH
-	echo 'export PATH="/usr/local/opt/binutils/bin:/usr/local/sbin:/usr/local/bin:'$HOME'/Library/pnpm:$PATH"' >> $HOME/.zshrc
+    # Create a symbolic link for .zsh_plugins.txt to home directory
+    ln -sf $REPO/zsh/antidote/.zsh_plugins.txt $HOME/.zsh_plugins.txt
 
-	# Install fzf
-	git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-	~/.fzf/install
+    # If .zsh_plugins.txt does not exist, create it
+    if [ ! -f $HOME/.zsh_plugins.txt ]; then
+        touch $HOME/.zsh_plugins.txt
+    fi
+
+    # Update PATH in .zsh_personal
+    echo 'export PATH="/usr/local/opt/binutils/bin:/usr/local/sbin:/usr/local/bin:'$HOME'/Library/pnpm:$PATH"' > $HOME/.zsh_personal
+
+    # Add alias to cd into the repository in .zsh_personal
+    echo "alias dotfiles='cd $REPO'" >> $HOME/.zsh_personal
+
+    # Source the .aliases file with the timestamp in .zsh_personal
+    echo "source $HOME/.aliases_$TIMESTAMP" >> $HOME/.zsh_personal
+
+    # Install fzf
+    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+    ~/.fzf/install
 }
 
 init

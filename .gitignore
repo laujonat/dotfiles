@@ -12,3 +12,5 @@ plugged/
 undodir/
 fonts/
 .netrwhist
+
+aliases/.aliases*

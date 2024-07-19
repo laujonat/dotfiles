@@ -33,3 +33,5 @@ fpath=(${ASDF_DIR}/completions $fpath)
 
 # initialise completions with ZSH's compinit
 compinit
+
+source $HOME/.zsh_personal
