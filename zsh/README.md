@@ -32,3 +32,25 @@ You will probably want to remove these lines from `.zshrc`:
 # append completions to fpath
 fpath=(${ASDF_DIR}/completions $fpath)
 ```
+
+### Notes
+
+#### Startup Order
+
+```
+.zshenv   → ALWAYS
+.zprofile → LOGIN ONLY
+.zshrc    → INTERACTIVE ONLY
+.zlogin   → LOGIN (after .zshrc)
+.zlogout  → LOGIN EXIT
+```
+
+### Best Practice
+
+Maintain predictability by keeping boundaries strict.
+
+```
+.zshenv   → baseline
+.zprofile → environment
+.zshrc    → interface
+```

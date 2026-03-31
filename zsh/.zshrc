@@ -1,15 +1,5 @@
-# Homebrew env (arm64 vs intel) — must be before brew usage
-if [[ -x /opt/homebrew/bin/brew ]]; then
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-elif [[ -x /usr/local/bin/brew ]]; then
-  eval "$(/usr/local/bin/brew shellenv)"
-fi
-
-# User-local binaries
-[[ -d "$HOME/.local/bin" ]] && export PATH="$HOME/.local/bin:$PATH"
-
-# pnpm (if present)
-[[ -d "$HOME/Library/pnpm" ]] && export PATH="$HOME/Library/pnpm:$PATH"
+# Exit early for non-interactive shells
+[[ -o interactive ]] || return
 
 # Completions
 autoload -Uz compinit
@@ -32,14 +22,9 @@ fi
 # Initialize completions after all fpath changes
 compinit
 
-# Interactive terminal behavior only
-if [[ -o interactive ]]; then
-  # Disable Ctrl-S/Ctrl-Q software flow control
-  stty -ixon 2>/dev/null
-
-  # Prevent accidental Ctrl-S freeze behavior in zsh
-  bindkey -r '^S' 2>/dev/null
-fi
+# Interactive terminal behavior
+stty -ixon 2>/dev/null
+bindkey -r '^S' 2>/dev/null
 
 # Optional configs
 [[ -f "$HOME/.zsh_private"  ]] && source "$HOME/.zsh_private"
