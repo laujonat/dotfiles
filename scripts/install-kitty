@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+REPO="${REPO:-$HOME/dotfiles}"
+
+mkdir -p "$HOME/.config/kitty"
+ln -sfn "$REPO/kitty/kitty.conf" "$HOME/.config/kitty/kitty.conf"
+ln -sfn "$REPO/kitty/dracula.conf" "$HOME/.config/kitty/dracula.conf"

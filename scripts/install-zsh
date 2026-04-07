@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+REPO="${REPO:-$HOME/dotfiles}"
+
+ln -sfn "$REPO/zsh/.zshrc" "$HOME/.zshrc"
+ln -sfn "$REPO/zsh/.zprofile" "$HOME/.zprofile"
+ln -sfn "$REPO/zsh/.zshenv" "$HOME/.zshenv"
+
+touch "$HOME/.zsh_private"
+touch "$HOME/.zsh_personal"

@@ -1,61 +1,78 @@
-#!/bin/bash
-dir="$( dirname "$0" )"
-cd "$dir/.."
-ruby="$(which ruby || rbenv which ruby)"
+#!/usr/bin/env bash
+set -euo pipefail
 
-# Install Homebrew if not installed
-function prompt() {
-  $(which -s brew)
-  if [[ $? == 0 ]] ; then
-    while true; do
-      echo "Required dependencies not found. For mac users, verify xcode-cli tools installation."
-      read -p "Do you wish to install missing packages now? (y/Y)es/(n/N)o `echo $'\n> '`" yn
-      case $yn in
-        [Yy]* ) install_brew; break;;
-        [Nn]* ) exit;;
-        * ) echo $'\n> ';;
-      esac
-    done
-  else
-    echo "Updating Homebrew.."
-    brew update
+DOTFILES_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
+BREWFILE="${DOTFILES_DIR}/Brewfile"
+
+have_cmd() {
+  command -v "$1" >/dev/null 2>&1
+}
+
+ensure_macos_prereqs() {
+  if ! xcode-select -p >/dev/null 2>&1; then
+    echo "Installing Xcode Command Line Tools..."
+    xcode-select --install || true
+    echo "Finish the Command Line Tools install, then rerun."
+    exit 1
   fi
 }
 
-function install_brew() {
-  os="$(uname -s)"
+ensure_linux_prereqs() {
+  if have_cmd apt-get; then
+    sudo apt-get update
+    sudo apt-get install -y build-essential curl file git
+  else
+    echo "Unsupported Linux package manager for preflight setup."
+    echo "Install curl, file, git, and build tools manually, then rerun."
+    exit 1
+  fi
+}
 
-  case $os in
-    "Linux")
-      install_linuxbrew
-      ;;
-    "Darwin")
-      install_macosbrew
+ensure_prereqs() {
+  case "$(uname -s)" in
+    Darwin) ensure_macos_prereqs ;;
+    Linux)  ensure_linux_prereqs ;;
+    *)
+      echo "Unsupported OS: $(uname -s)"
+      exit 1
       ;;
   esac
 }
 
-function install_linuxbrew() {
-  echo ">Installing Linuxbrew"
-  sudo apt-get update
-  sudo apt-get upgrade
-  sudo apt-get install build-essential curl file git
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
-  echo "eval \$($(brew --prefix)/bin/brew shellenv)" >> $HOME/.profile
+load_brew_env() {
+  if [[ -x /opt/homebrew/bin/brew ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  elif [[ -x /usr/local/bin/brew ]]; then
+    eval "$(/usr/local/bin/brew shellenv)"
+  elif [[ -x /home/linuxbrew/.linuxbrew/bin/brew ]]; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+  else
+    echo "brew not found after install"
+    exit 1
+  fi
 }
 
-function install_macosbrew() {
-  if ! [[ -x "$(hash xcode-select)" ]]; then
-    echo 'Installing xcode-select cli tools (Update if necessary)' >&2
-    echo  "eval $(xcode-select --install)"
+install_homebrew() {
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  load_brew_env
+}
+
+main() {
+  if ! have_cmd brew; then
+    ensure_prereqs
+    install_homebrew
+  else
+    load_brew_env || true
   fi
 
-  echo ">Installing Homebrew"
-  $ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-  brew doctor
+  brew update
+
+  if [[ -f "$BREWFILE" ]]; then
+    brew bundle --file="$BREWFILE"
+  else
+    echo "Missing Brewfile: $BREWFILE"
+    exit 1
+  fi
 }
 
-# Runs brew installation for first script execution
-if [ -d "$dir/history" ];
-then :; else prompt
-fi
+main "$@"
