@@ -9,3 +9,7 @@ ln -sfn "$REPO/zsh/.zshenv" "$HOME/.zshenv"
 
 touch "$HOME/.zsh_private"
 touch "$HOME/.zsh_personal"
+
+if [[ -f "$REPO/aliases/aliases.zsh" ]]; then
+  ln -sfn "$REPO/aliases/aliases.zsh" "$HOME/.aliases"
+fi

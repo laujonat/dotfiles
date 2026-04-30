@@ -3,5 +3,5 @@ set -euo pipefail
 
 REPO="${REPO:-$HOME/dotfiles}"
 
-mkdi -p "$HOME/.config"
+mkdir -p "$HOME/.config"
 ln -sfn "$REPO/nvim" "$HOME/.config/nvim"
