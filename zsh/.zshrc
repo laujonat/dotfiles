@@ -29,3 +29,10 @@ bindkey -r '^S' 2>/dev/null
 # Optional configs
 [[ -f "$HOME/.zsh_private"  ]] && source "$HOME/.zsh_private"
 [[ -f "$HOME/.zsh_personal" ]] && source "$HOME/.zsh_personal"
+
+# bun completions
+[ -s "/Users/user/.bun/_bun" ] && source "/Users/user/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
