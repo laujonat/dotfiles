@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+REPO="${REPO:-$HOME/dotfiles}"
+
+ln -sfn "$REPO/tmux/.tmux.conf" "$HOME/.tmux.conf"
+ln -sfn "$REPO/tmux/.tmux.conf.local" "$HOME/.tmux.conf.local"
