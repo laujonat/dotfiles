@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REPO="${REPO:-$HOME/dotfiles}"
+REPO="${REPO:-$(cd "$(dirname "$0")/.." && pwd)}"
 
 mkdir -p "$HOME/.config"
 ln -sfn "$REPO/nvim" "$HOME/.config/nvim"

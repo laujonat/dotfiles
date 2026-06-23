@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REPO="${REPO:-$HOME/dotfiles}"
+REPO="${REPO:-$(cd "$(dirname "$0")/.." && pwd)}"
 
 mkdir -p "$HOME/.config/kitty"
 ln -sfn "$REPO/kitty/kitty.conf" "$HOME/.config/kitty/kitty.conf"

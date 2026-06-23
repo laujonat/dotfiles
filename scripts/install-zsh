@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REPO="${REPO:-$HOME/dotfiles}"
+REPO="${REPO:-$(cd "$(dirname "$0")/.." && pwd)}"
 
 ln -sfn "$REPO/zsh/.zshrc" "$HOME/.zshrc"
 ln -sfn "$REPO/zsh/.zprofile" "$HOME/.zprofile"
