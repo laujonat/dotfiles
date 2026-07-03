@@ -1,0 +1,67 @@
+tmux Cheat Sheet — tmux.app
+=============================
+Prefix: Ctrl+b (press and release, then the shortcut key)
+
+SESSIONS
+  tmux                  New session
+  tmux new -s name      New named session
+  tmux ls               List sessions
+  tmux a                Attach to last session
+  tmux a -t name        Attach to named session
+  Prefix d              Detach session
+  Prefix $              Rename session
+  Prefix s              Session list (interactive)
+  tmux kill-session -t  Kill session
+  tmux kill-server      Kill all sessions
+
+WINDOWS
+  Prefix c              Create window
+  Prefix ,              Rename window
+  Prefix n              Next window
+  Prefix p              Previous window
+  Prefix l              Last window
+  Prefix 0-9            Select by number
+  Prefix w              Window list
+  Prefix f              Find window
+  Prefix &              Kill window
+  Prefix .              Move window
+
+PANES
+  Prefix %              Split horizontally
+  Prefix "              Split vertically
+  Prefix o              Select next pane
+  Prefix arrows         Navigate panes
+  Prefix q              Show pane numbers
+  Prefix z              Toggle zoom
+  Prefix x              Kill pane
+  Prefix }              Swap pane forward
+  Prefix {              Swap pane backward
+  Prefix !              Break pane to window
+  Prefix Ctrl+arrows    Resize pane
+  Prefix Space          Cycle layouts
+
+COPY MODE
+  Prefix [              Enter copy mode (Scroll Up)
+  PgUp / PgDn           Scroll Up / Down
+  Prefix ]              Paste buffer
+  Prefix =              List buffers
+  h, j, k, l            Navigate (vi)
+  0 / $                 Line Start / End
+  /                     Search forward
+  ?                     Search backward
+  v (vi) / Space        Start selection
+  y / Enter             Copy selection
+  q / Esc               Exit copy mode
+
+COMMAND MODE
+  Prefix :              Open command prompt
+  Prefix ?              List key bindings
+  Prefix : source-file ~/.tmux.conf   Reload config
+
+MISC
+  Prefix t              Clock mode
+  Prefix D              Detach other clients
+  tmux -V               Version
+  tmux info             Server info
+
+Source: https://tmux.app/cheat-sheet/

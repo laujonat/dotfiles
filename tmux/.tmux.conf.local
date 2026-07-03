@@ -368,6 +368,11 @@ tmux_conf_update_plugins_on_launch=true
 #   - false
 tmux_conf_update_plugins_on_reload=true
 
+
+# reference tmux commands from shell:
+# (requires tmux ≥3.2) rather than opening a new pane/window, since it overlays and dismisses on exit (q).
+bind-key ? display-popup -E "bat ~/dev/dotfiles/tmux/cheatsheet.txt || less ~/dev/dotfiles/tmux/cheatsheet.txt"
+
 # /!\ do not add set -g @plugin 'tmux-plugins/tpm'
 # /!\ do not add run '~/.tmux/plugins/tpm/tpm'
 
